@@ -105,17 +105,17 @@ if(!glview) {
     }
     else // non retina iPhone and Android devices
     {
-        if ( 1080 < screenSize.width && 1080 < screenSize.height ) // android devices that have a high resolution
+        if ( 1080 <= screenSize.width && 1080 <= screenSize.height ) // android devices that have a high resolution
         {
             resDirOrders.push_back( "iphonehd" );
             resDirOrders.push_back( "iphone" );
-            
+             
             glview->setDesignResolutionSize( 640, 960, ResolutionPolicy::NO_BORDER );
         }
         else // non retina iPhone and Android devices with lower resolutions
         {
             resDirOrders.push_back( "iphone" );
-            
+
             glview->setDesignResolutionSize( 320, 480, ResolutionPolicy::NO_BORDER );
         }
     }
@@ -124,11 +124,11 @@ if(!glview) {
     resDirOrders.push_back( "iphonehd5" );
     resDirOrders.push_back( "iphonehd" );
     resDirOrders.push_back( "iphone" );
-    
+
     glview->setFrameSize( 768, 1024 );
     glview->setDesignResolutionSize( 768, 1024, ResolutionPolicy::NO_BORDER );
 #endif
-    
+
     fileUtils->setSearchPaths(resDirOrders);
 
     register_all_packages();
