@@ -18,11 +18,6 @@ using namespace CocosDenshion;
 
 USING_NS_CC;
 
-static cocos2d::Size designResolutionSize = cocos2d::Size(480, 320);
-static cocos2d::Size smallResolutionSize = cocos2d::Size(480, 320);
-static cocos2d::Size mediumResolutionSize = cocos2d::Size(1024, 768);
-static cocos2d::Size largeResolutionSize = cocos2d::Size(2048, 1536);
-
 AppDelegate::AppDelegate()
 {
 }
@@ -57,39 +52,84 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // initialize director
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
-    if(!glview) {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-        glview = GLViewImpl::createWithRect("FlipIt", cocos2d::Rect(0, 0, designResolutionSize.width, designResolutionSize.height));
-#else
-        glview = GLViewImpl::create("FlipIt");
-#endif
+if(!glview) {
+        glview = GLView::create("My Game");
         director->setOpenGLView(glview);
     }
-
+    
     // turn on display FPS
     director->setDisplayStats(true);
-
+    
     // set FPS. the default value is 1.0/60 if you don't call this
-    director->setAnimationInterval(1.0f / 60);
-
-    // Set the design resolution
-    glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::NO_BORDER);
-    auto frameSize = glview->getFrameSize();
-    // if the frame's height is larger than the height of medium size.
-    if (frameSize.height > mediumResolutionSize.height)
-    {        
-        director->setContentScaleFactor(MIN(largeResolutionSize.height/designResolutionSize.height, largeResolutionSize.width/designResolutionSize.width));
+    director->setAnimationInterval(1.0 / 60);
+    
+    auto fileUtils = FileUtils::getInstance( );
+    auto screenSize = glview->getFrameSize( );
+    std::vector<std::string> resDirOrders;
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    // check which assets the devices requires
+    if ( 2048 == screenSize.width || 2048 == screenSize.height ) // retina iPad
+    {
+        resDirOrders.push_back( "ipadhd" );
+        resDirOrders.push_back( "ipad" );
+        resDirOrders.push_back( "iphonehd5" );
+        resDirOrders.push_back( "iphonehd" );
+        resDirOrders.push_back( "iphone" );
+        
+        glview->setDesignResolutionSize( 1536, 2048, ResolutionPolicy::NO_BORDER );
     }
-    // if the frame's height is larger than the height of small size.
-    else if (frameSize.height > smallResolutionSize.height)
-    {        
-        director->setContentScaleFactor(MIN(mediumResolutionSize.height/designResolutionSize.height, mediumResolutionSize.width/designResolutionSize.width));
+    else if ( 1024 == screenSize.width || 1024 == screenSize.height ) // non retina iPad
+    {
+        resDirOrders.push_back( "ipad" );
+        resDirOrders.push_back( "iphonehd5" );
+        resDirOrders.push_back( "iphonehd" );
+        resDirOrders.push_back( "iphone" );
+        
+        glview->setDesignResolutionSize( 768, 1024, ResolutionPolicy::NO_BORDER );
     }
-    // if the frame's height is smaller than the height of medium size.
-    else
-    {        
-        director->setContentScaleFactor(MIN(smallResolutionSize.height/designResolutionSize.height, smallResolutionSize.width/designResolutionSize.width));
+    else if ( 1136 == screenSize.width || 1136 == screenSize.height ) // retina iPhone (5 and 5S)
+    {
+        resDirOrders.push_back("iphonehd5");
+        resDirOrders.push_back("iphonehd");
+        resDirOrders.push_back("iphone");
+        
+        glview->setDesignResolutionSize( 640, 1136, ResolutionPolicy::NO_BORDER );
     }
+    else if ( 960 == screenSize.width || 960 == screenSize.height ) // retina iPhone (4 and 4S)
+    {
+        resDirOrders.push_back( "iphonehd" );
+        resDirOrders.push_back( "iphone" );
+        
+        glview->setDesignResolutionSize( 640, 960, ResolutionPolicy::NO_BORDER );
+    }
+    else // non retina iPhone and Android devices
+    {
+        if ( 1080 < screenSize.width && 1080 < screenSize.height ) // android devices that have a high resolution
+        {
+            resDirOrders.push_back( "iphonehd" );
+            resDirOrders.push_back( "iphone" );
+            
+            glview->setDesignResolutionSize( 640, 960, ResolutionPolicy::NO_BORDER );
+        }
+        else // non retina iPhone and Android devices with lower resolutions
+        {
+            resDirOrders.push_back( "iphone" );
+            
+            glview->setDesignResolutionSize( 320, 480, ResolutionPolicy::NO_BORDER );
+        }
+    }
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+    resDirOrders.push_back( "ipad" );
+    resDirOrders.push_back( "iphonehd5" );
+    resDirOrders.push_back( "iphonehd" );
+    resDirOrders.push_back( "iphone" );
+    
+    glview->setFrameSize( 768, 1024 );
+    glview->setDesignResolutionSize( 768, 1024, ResolutionPolicy::NO_BORDER );
+#endif
+    
+    fileUtils->setSearchPaths(resDirOrders);
 
     register_all_packages();
 
