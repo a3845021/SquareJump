@@ -5,7 +5,12 @@ USING_NS_CC;
 
 Scene* GameScene::createScene()
 {
-    return GameScene::create();
+    auto scene = Scene::create();
+    auto layer = GameScene::create();
+
+    scene->addChild(layer);
+
+    return scene; 
 }
 
 // on "init" you need to initialize your instance
@@ -13,7 +18,7 @@ bool GameScene::init()
 {
     //////////////////////////////
     // 1. super init first
-    if ( !Scene::init() )
+    if ( !Layer::init() )
     {
         return false;
     }
@@ -27,13 +32,8 @@ bool GameScene::init()
                 visibleSize.height / 2 + origin.y));                        
                                                                             
     this->addChild(backgroundSprite);
-
-    auto lineSprite = Sprite::create("line.png");
-    lineSprite->setPosition(Point(
-                visibleSize.width / 2 + origin.x,
-                visibleSize.height / 2 + origin.y));
-
-    this->addChild(lineSprite);
+    
+    line = new Line(this);
 
     return true;
 }
