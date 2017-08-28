@@ -1,5 +1,5 @@
 #include "AppDelegate.h"
-#include "HelloWorldScene.h"
+#include "GameScene.h"
 
 // #define USE_AUDIO_ENGINE 1
 // #define USE_SIMPLE_AUDIO_ENGINE 1
@@ -53,7 +53,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
 if(!glview) {
-        glview = GLViewImpl::create("My Game");
+        glview = GLViewImpl::create("FlipIt");
         director->setOpenGLView(glview);
     }
     
@@ -64,10 +64,10 @@ if(!glview) {
     director->setAnimationInterval(1.0 / 60);
     
     auto fileUtils = FileUtils::getInstance( );
-    auto screenSize = glview->getFrameSize( );
     std::vector<std::string> resDirOrders;
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    auto screenSize = glview->getFrameSize( );
     // check which assets the devices requires
     if ( 2048 == screenSize.width || 2048 == screenSize.height ) // retina iPad
     {
@@ -134,7 +134,7 @@ if(!glview) {
     register_all_packages();
 
     // create a scene. it's an autorelease object
-    auto scene = HelloWorld::createScene();
+    auto scene = GameScene::createScene();
 
     // run
     director->runWithScene(scene);
