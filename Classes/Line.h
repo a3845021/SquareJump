@@ -7,6 +7,7 @@ class Line
 {
 public:
     Line(cocos2d::Layer *layer);
+    void moveDown(float dt);
 
 private:
     cocos2d::Size visibleSize;

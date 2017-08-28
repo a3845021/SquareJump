@@ -34,6 +34,14 @@ bool GameScene::init()
     this->addChild(backgroundSprite);
     
     line = new Line(this);
+    
+    this->scheduleUpdate();
 
     return true;
+}
+
+void GameScene::update(float dt)
+{
+    CCLOG("%f", dt);
+    line->moveDown(dt);
 }

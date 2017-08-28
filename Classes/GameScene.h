@@ -15,6 +15,7 @@ public:
     CREATE_FUNC(GameScene);
 
 private:
+    void update(float dt);
     Line *line;
 };
 
