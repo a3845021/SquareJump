@@ -28,5 +28,12 @@ bool GameScene::init()
                                                                             
     this->addChild(backgroundSprite);
 
+    auto lineSprite = Sprite::create("line.png");
+    lineSprite->setPosition(Point(
+                visibleSize.width / 2 + origin.x,
+                visibleSize.height / 2 + origin.y));
+
+    this->addChild(lineSprite);
+
     return true;
 }
