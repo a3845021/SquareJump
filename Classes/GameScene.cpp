@@ -33,6 +33,8 @@ bool GameScene::init()
                                                                             
     this->addChild(backgroundSprite);
     
+    rain = new Rain(this);
+
     line = new Line(this);
     
     this->scheduleUpdate();
@@ -43,5 +45,6 @@ bool GameScene::init()
 void GameScene::update(float dt)
 {
     CCLOG("%f", dt);
+    rain->moveDown(dt);
     line->moveDown(dt);
 }

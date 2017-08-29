@@ -129,6 +129,8 @@ set(GAME_SRC
   Classes/AppDelegate.cpp
   Classes/GameScene.cpp
   Classes/Line.cpp
+  Classes/Rain.cpp
+  Classes/RainDrop.cpp
   ${PLATFORM_SPECIFIC_SRC}
 )
 
@@ -136,6 +138,8 @@ set(GAME_HEADERS
   Classes/AppDelegate.h
   Classes/GameScene.h
   Classes/Line.h
+  Classes/Rain.h
+  Classes/RainDrop.h
   ${PLATFORM_SPECIFIC_HEADERS}
 )
 

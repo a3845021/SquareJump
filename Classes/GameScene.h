@@ -2,6 +2,7 @@
 #define __GAME_SCENE_H__
 
 #include "cocos2d.h"
+#include "Rain.h"
 #include "Line.h"
 
 class GameScene : public cocos2d::Layer
@@ -16,6 +17,7 @@ public:
 
 private:
     void update(float dt);
+    Rain *rain;
     Line *line;
 };
 
