@@ -11,10 +11,16 @@ public:
     void moveDown(float dt);
 
 private:
+    void initRainDrop();
+
+    void resetRainDrop();
+
     cocos2d::Size visibleSize;
     cocos2d::Vec2 origin;
 
     cocos2d::Sprite *rainDropSprite;
+    float speedCoef;
+
 };
 #endif // __RAIN_DROP_H__
 

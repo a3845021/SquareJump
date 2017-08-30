@@ -44,7 +44,7 @@ bool GameScene::init()
 
 void GameScene::update(float dt)
 {
-    CCLOG("%f", dt);
+    //CCLOG("%f", dt);
     rain->moveDown(dt);
     line->moveDown(dt);
 }
