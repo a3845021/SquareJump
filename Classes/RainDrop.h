@@ -6,12 +6,14 @@
 class RainDrop
 {
 public:
-    RainDrop(cocos2d::Layer *layer, const std::string& fileName);
+    RainDrop(cocos2d::Layer *layer, const std::string& filename);
 
     void moveDown(float dt);
 
 private:
     void initRainDrop();
+
+    void fall(float dt);
 
     void resetRainDrop();
 

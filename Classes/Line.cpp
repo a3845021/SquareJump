@@ -30,7 +30,7 @@ void Line::moveDown(float dt)
     if((shiningSprite->getPositionY() + (shiningSprite->getContentSize().height / 2)) > origin.y)
     {
         shiningSprite->setPositionY(shiningSprite->getPositionY() - 
-                (MOVE_SPEED * visibleSize.height * dt));
+                (GAME_SPEED * visibleSize.height * dt));
     }
     else
     {
