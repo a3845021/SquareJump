@@ -131,6 +131,7 @@ set(GAME_SRC
   Classes/Line.cpp
   Classes/Rain.cpp
   Classes/RainDrop.cpp
+  Classes/FlippingSquare.cpp
   ${PLATFORM_SPECIFIC_SRC}
 )
 
@@ -140,6 +141,7 @@ set(GAME_HEADERS
   Classes/Line.h
   Classes/Rain.h
   Classes/RainDrop.h
+  Classes/FlippingSquare.h
   ${PLATFORM_SPECIFIC_HEADERS}
 )
 

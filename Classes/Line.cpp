@@ -8,14 +8,14 @@ Line::Line(Layer *layer)
     visibleSize = Director::getInstance()->getVisibleSize();
     origin = Director::getInstance()->getVisibleOrigin();
 
-    auto lineSprite = Sprite::create("line.png");
+    auto lineSprite = Sprite::createWithSpriteFrameName("line.png");
     lineSprite->setPosition(Point(
                 visibleSize.width / 2 + origin.x,
                 visibleSize.height / 2 + origin.y));
 
     layer->addChild(lineSprite);
     
-    shiningSprite = Sprite::create("shiningLines.png");
+    shiningSprite = Sprite::createWithSpriteFrameName("shiningLines.png");
     const float DISPLACEMENT_COEF = 0.15;
     shiningSprite->setPosition(Point(
                 (visibleSize.width / 2) + origin.x - 

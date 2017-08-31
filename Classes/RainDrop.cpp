@@ -8,7 +8,7 @@ RainDrop::RainDrop(Layer *layer, const std::string& filename)
     visibleSize = Director::getInstance()->getVisibleSize();
     origin = Director::getInstance()->getVisibleOrigin();
    
-    rainDropSprite = Sprite::create(filename);
+    rainDropSprite = Sprite::createWithSpriteFrameName(filename);
 
     initRainDrop();
 

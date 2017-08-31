@@ -21,6 +21,7 @@ private:
     cocos2d::Vec2 origin;
 
     cocos2d::Sprite *rainDropSprite;
+    
     float speedCoef;
 
 };
