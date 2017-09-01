@@ -4,6 +4,7 @@
 #include "cocos2d.h"
 #include "Rain.h"
 #include "Line.h"
+#include "FlippingSquare.h"
 
 class GameScene : public cocos2d::Layer
 {
@@ -19,6 +20,7 @@ private:
     void update(float dt);
     Rain *rain;
     Line *line;
+    FlippingSquare *flippingSquare;
 };
 
 #endif // __GAME_SCENE_H__

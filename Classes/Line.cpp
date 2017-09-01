@@ -9,6 +9,7 @@ Line::Line(Layer *layer)
     origin = Director::getInstance()->getVisibleOrigin();
 
     auto lineSprite = Sprite::createWithSpriteFrameName("line.png");
+    lineSprite->setName("line");
     lineSprite->setPosition(Point(
                 visibleSize.width / 2 + origin.x,
                 visibleSize.height / 2 + origin.y));

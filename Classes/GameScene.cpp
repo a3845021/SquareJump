@@ -40,6 +40,9 @@ bool GameScene::init()
 
     line = new Line(this);
     
+    flippingSquare = new FlippingSquare(this);
+    flippingSquare->flip();
+
     this->scheduleUpdate();
 
     return true;

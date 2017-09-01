@@ -11,8 +11,6 @@ public:
     void moveDown(float dt);
 
 private:
-    void initRainDrop();
-
     void fall(float dt);
 
     void resetRainDrop();
