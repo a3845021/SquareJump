@@ -41,7 +41,13 @@ bool GameScene::init()
     line = new Line(this);
     
     flippingSquare = new FlippingSquare(this);
-    flippingSquare->flip();
+    //flippingSquare->flip();
+    
+    auto touchListener = EventListenerTouchOneByOne::create();
+    touchListener->setSwallowTouches(true);
+    touchListener->onTouchBegan = CC_CALLBACK_2(GameScene::onTouchBegan, this);
+    Director::getInstance()->getEventDispatcher()->
+        addEventListenerWithSceneGraphPriority(touchListener, this);
 
     this->scheduleUpdate();
 
@@ -53,4 +59,12 @@ void GameScene::update(float dt)
     //CCLOG("%f", dt);
     rain->moveDown(dt);
     line->moveDown(dt);
+}
+
+bool GameScene::onTouchBegan(Touch *touch, Event *event)
+{
+    CCLOG("TouchBegan");
+    flippingSquare->flip();
+
+    return true;
 }

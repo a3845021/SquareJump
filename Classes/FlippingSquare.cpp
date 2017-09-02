@@ -36,7 +36,7 @@ void FlippingSquare::flip()
         case Side::LEFT:
             flippingSquareSprite->stopAllActions();
             flippingSquareSprite->runAction(Spawn::create(
-                        Animate::create(animationsMap[FlippingAnimation::FLIP_RIGHT]),
+                        Animate::create(animationsMap.at("FLIP_RIGHT")),
                         MoveBy::create(
                             FLIP_ANIMATION_TIME, 
                             Point(
@@ -49,7 +49,7 @@ void FlippingSquare::flip()
         case Side::RIGHT:
             flippingSquareSprite->stopAllActions();
             flippingSquareSprite->runAction(Spawn::create(
-                        Animate::create(animationsMap[FlippingAnimation::FLIP_LEFT]),
+                        Animate::create(animationsMap.at("FLIP_LEFT")),
                         MoveBy::create(
                             FLIP_ANIMATION_TIME, 
                             Point(
@@ -64,8 +64,8 @@ void FlippingSquare::flip()
 
 void FlippingSquare::initAnimations(const std::string &str)
 {
-    animationsMap[FlippingAnimation::FLIP_RIGHT] = getFlipAnimation(str, FLIP_ANIMATION_TIME, 2, 6);
-    animationsMap[FlippingAnimation::FLIP_LEFT] = getFlipAnimation(str, FLIP_ANIMATION_TIME, 7, 11);
+    animationsMap.insert("FLIP_RIGHT", getFlipAnimation(str, FLIP_ANIMATION_TIME, 2, 6));
+    animationsMap.insert("FLIP_LEFT", getFlipAnimation(str, FLIP_ANIMATION_TIME, 7, 11));
 }
 
 Animation *FlippingSquare::getFlipAnimation(const std::string &str,
@@ -76,6 +76,7 @@ Animation *FlippingSquare::getFlipAnimation(const std::string &str,
     auto spriteFrameCache = SpriteFrameCache::getInstance();
 
     Animation *flipAnimation = Animation::create();
+
     for(int i = startFrameNum; i <= endFrameNum; ++i)
     {
         std::ostringstream fileNameStream;

@@ -11,6 +11,6 @@ const GLubyte RAIN_DROP_OPACITY = 140; //(0 -> 255) unsigned char
 const float RAIN_SCALE_SPEED_COEF = 0.6; // (0 -> 1) bigger it is then bigger
                                     // average speed of rain drops
 
-const float FLIP_ANIMATION_TIME = 1; // seconds
+const float FLIP_ANIMATION_TIME = 0.3; // seconds
 
 #endif// __DEFINITIONS_H__

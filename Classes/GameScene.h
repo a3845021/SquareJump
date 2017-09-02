@@ -18,6 +18,7 @@ public:
 
 private:
     void update(float dt);
+    bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event);
     Rain *rain;
     Line *line;
     FlippingSquare *flippingSquare;
