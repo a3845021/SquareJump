@@ -64,8 +64,8 @@ void FlippingSquare::flip()
 
 void FlippingSquare::initAnimations(const std::string &str)
 {
-    animationsMap.insert("FLIP_RIGHT", getFlipAnimation(str, FLIP_ANIMATION_TIME, 2, 6));
-    animationsMap.insert("FLIP_LEFT", getFlipAnimation(str, FLIP_ANIMATION_TIME, 7, 11));
+    animationsMap.insert("FLIP_RIGHT", getFlipAnimation(str, FLIP_ANIMATION_TIME, 2, 10));
+    animationsMap.insert("FLIP_LEFT", getFlipAnimation(str, FLIP_ANIMATION_TIME, 11, 19));
 }
 
 Animation *FlippingSquare::getFlipAnimation(const std::string &str,

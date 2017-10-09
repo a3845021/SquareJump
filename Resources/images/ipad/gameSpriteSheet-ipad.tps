@@ -221,6 +221,14 @@
             <key type="filename">flippingSquare/flippingSquare1.png</key>
             <key type="filename">flippingSquare/flippingSquare10.png</key>
             <key type="filename">flippingSquare/flippingSquare11.png</key>
+            <key type="filename">flippingSquare/flippingSquare12.png</key>
+            <key type="filename">flippingSquare/flippingSquare13.png</key>
+            <key type="filename">flippingSquare/flippingSquare14.png</key>
+            <key type="filename">flippingSquare/flippingSquare15.png</key>
+            <key type="filename">flippingSquare/flippingSquare16.png</key>
+            <key type="filename">flippingSquare/flippingSquare17.png</key>
+            <key type="filename">flippingSquare/flippingSquare18.png</key>
+            <key type="filename">flippingSquare/flippingSquare19.png</key>
             <key type="filename">flippingSquare/flippingSquare2.png</key>
             <key type="filename">flippingSquare/flippingSquare3.png</key>
             <key type="filename">flippingSquare/flippingSquare4.png</key>
