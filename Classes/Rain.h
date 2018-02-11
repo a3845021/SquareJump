@@ -4,15 +4,13 @@
 #include "cocos2d.h"
 #include "RainDrop.h"
 
-class Rain 
+class Rain
 {
 public:
-    Rain(cocos2d::Layer *layer);
-    ~Rain();
+    explicit Rain(cocos2d::Layer *layer);
     void moveDown(float dt);
 
 private:
-    std::vector<std::unique_ptr<RainDrop>> rainDrops;
-
+    std::vector<RainDrop> rainDrops;
 };
 #endif // __RAIN_H__

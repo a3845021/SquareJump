@@ -15,18 +15,14 @@ RainDrop::RainDrop(Layer *layer, const std::string& filename)
     auto randomScale = random(MIN_RAIN_DROP_SCALE, MAX_RAIN_DROP_SCALE);
     rainDropSprite->setScale(randomScale);
 
-    speedCoef = (randomScale - MIN_RAIN_DROP_SCALE + (MAX_RAIN_DROP_SCALE - randomScale) * RAIN_SCALE_SPEED_COEF) /
+    speedCoef = (randomScale - MIN_RAIN_DROP_SCALE + (MAX_RAIN_DROP_SCALE - randomScale) * RAIN_SCALE_SPEED_COEFFICIENT) /
                 (MAX_RAIN_DROP_SCALE - MIN_RAIN_DROP_SCALE);
 
     rainDropSprite->setPosition(Point(
-                random<int>(
-                    origin.x + (rainDropSprite->getBoundingBox().size.width / 2),
-                    visibleSize.width + origin.x - (rainDropSprite->getBoundingBox().size.width / 2)),
-                random<int>(
-                    origin.y,
-                    visibleSize.height + origin.y)
-                ));
-
+                random(origin.x + (rainDropSprite->getBoundingBox().size.width / 2),
+                        visibleSize.width + origin.x - (rainDropSprite->getBoundingBox().size.width / 2)),
+                random(origin.y,
+                        visibleSize.height + origin.y)));
     layer->addChild(rainDropSprite);
 }
 
@@ -53,7 +49,7 @@ void RainDrop::resetRainDrop()
     auto randomScale = random(MIN_RAIN_DROP_SCALE, MAX_RAIN_DROP_SCALE);
     rainDropSprite->setScale(randomScale);
     
-    speedCoef = (randomScale - MIN_RAIN_DROP_SCALE + (MAX_RAIN_DROP_SCALE - randomScale) * RAIN_SCALE_SPEED_COEF) /
+    speedCoef = (randomScale - MIN_RAIN_DROP_SCALE + (MAX_RAIN_DROP_SCALE - randomScale) * RAIN_SCALE_SPEED_COEFFICIENT) /
                 (MAX_RAIN_DROP_SCALE - MIN_RAIN_DROP_SCALE);
 
     rainDropSprite->setPosition(Point(

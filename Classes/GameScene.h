@@ -19,9 +19,11 @@ public:
 private:
     void update(float dt);
     bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event);
+    const cocos2d::Size visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
+    const cocos2d::Vec2 origin = cocos2d::Director::getInstance()->getVisibleOrigin();
     Rain *rain;
     Line *line;
-    FlippingSquare *flippingSquare;
+    std::map<FlippingSquare::ScreenSide, FlippingSquare> flippingSquares;
 };
 
 #endif // __GAME_SCENE_H__

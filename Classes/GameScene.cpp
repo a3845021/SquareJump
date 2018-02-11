@@ -22,9 +22,6 @@ bool GameScene::init()
     {
         return false;
     }
-    
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
     auto spriteCache = SpriteFrameCache::getInstance();
     spriteCache->addSpriteFramesWithFile("gameSpriteSheet.plist");
@@ -40,8 +37,8 @@ bool GameScene::init()
 
     line = new Line(this);
     
-    flippingSquare = new FlippingSquare(this);
-    //flippingSquare->flip();
+    flippingSquares.emplace(FlippingSquare::ScreenSide::LEFT, FlippingSquare(this, FlippingSquare::ScreenSide::LEFT));
+    flippingSquares.emplace(FlippingSquare::ScreenSide::RIGHT, FlippingSquare(this, FlippingSquare::ScreenSide::RIGHT));
     
     auto touchListener = EventListenerTouchOneByOne::create();
     touchListener->setSwallowTouches(true);
@@ -63,8 +60,11 @@ void GameScene::update(float dt)
 
 bool GameScene::onTouchBegan(Touch *touch, Event *event)
 {
-    CCLOG("TouchBegan");
-    flippingSquare->flip();
-
+    Vec2 touchLocation = this->convertTouchToNodeSpace(touch);
+    if(touchLocation.x < visibleSize.width / 2 + origin.x) { //check left or right side of the screen
+        flippingSquares.at(FlippingSquare::ScreenSide::LEFT).flip();
+    }else{
+        flippingSquares.at(FlippingSquare::ScreenSide::RIGHT).flip();
+    }
     return true;
 }

@@ -21,7 +21,6 @@ private:
     cocos2d::Sprite *rainDropSprite;
     
     float speedCoef;
-
 };
 #endif // __RAIN_DROP_H__
 

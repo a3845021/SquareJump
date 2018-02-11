@@ -6,7 +6,13 @@
 class FlippingSquare
 {
 public:
-    FlippingSquare(cocos2d::Layer *layer);
+    enum class ScreenSide
+    {
+        LEFT,
+        RIGHT
+    };
+
+    FlippingSquare(cocos2d::Layer *layer, const FlippingSquare::ScreenSide &screenSide);
     
     void flip();
 
@@ -17,16 +23,18 @@ private:
         RIGHT
     };
 
-    void initAnimations(const std::string& str);
-    cocos2d::Animation *getFlipAnimation(const std::string &str,
-                                         const float duration,
-                                         const int startFrameNum,
-                                         const int endFrameNum);
+//    void initAnimations(const std::string& str);
+//    cocos2d::Animation *getFlipAnimation(const std::string &str,
+//                                         const float duration,
+//                                         const int startFrameNum,
+//                                         const int endFrameNum);
+    void setInitPosition(const cocos2d::Node *lineSprite);
 
     cocos2d::Size visibleSize;
     cocos2d::Vec2 origin;
 
     Side side;
+    ScreenSide screenSide;
     cocos2d::Sprite *flippingSquareSprite;
     cocos2d::Map<std::string, cocos2d::Animation*> animationsMap;
 

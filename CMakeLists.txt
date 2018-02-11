@@ -77,7 +77,7 @@ else()
   set(CMAKE_C_FLAGS_DEBUG "-g -Wall")
   set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wno-deprecated-declarations -Wno-reorder")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wno-deprecated-declarations -Wno-reorder")
   if(CLANG)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
   endif()
@@ -142,6 +142,7 @@ set(GAME_HEADERS
   Classes/Rain.h
   Classes/RainDrop.h
   Classes/FlippingSquare.h
+  Classes/Definitions.h
   ${PLATFORM_SPECIFIC_HEADERS}
 )
 

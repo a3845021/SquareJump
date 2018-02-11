@@ -3,20 +3,15 @@
 
 USING_NS_CC;
 
-Rain::Rain(Layer *layer) : rainDrops(RAIN_DROPS_NUMBER)
+Rain::Rain(Layer *layer)
 {
     for(int i = 0; i < RAIN_DROPS_NUMBER; ++i)
-    {
-        auto rainDrop = std::unique_ptr<RainDrop>(new RainDrop(layer, "rainDrop.png"));
-        rainDrops[i] = std::move(rainDrop);
-    }
+        rainDrops.emplace_back(RainDrop(layer, "rainDrop.png"));
 }
 
 void Rain::moveDown(float dt)
 {
     //CCLOG("%d", rainDrops.capacity());
-    for(std::unique_ptr<RainDrop> &rainDrop: rainDrops)
-    {
-        rainDrop->moveDown(dt);
-    }
+    for(auto rainDrop: rainDrops)
+        rainDrop.moveDown(dt);
 }

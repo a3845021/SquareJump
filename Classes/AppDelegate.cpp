@@ -22,7 +22,7 @@ AppDelegate::AppDelegate()
 {
 }
 
-AppDelegate::~AppDelegate() 
+AppDelegate::~AppDelegate()
 {
 #if USE_AUDIO_ENGINE
     AudioEngine::end();
@@ -61,7 +61,7 @@ if(!glview) {
     director->setDisplayStats(true);
     
     // set FPS. the default value is 1.0/60 if you don't call this
-    director->setAnimationInterval(1.0 / 60);
+    director->setAnimationInterval(1.0f / 60);
     
     auto fileUtils = FileUtils::getInstance( );
     std::vector<std::string> resDirOrders;
@@ -120,10 +120,10 @@ if(!glview) {
         }
     }
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-    resDirOrders.push_back( "ipad" );
-    resDirOrders.push_back( "iphonehd5" );
-    resDirOrders.push_back( "iphonehd" );
-    resDirOrders.push_back( "iphone" );
+    resDirOrders.emplace_back("ipad" );
+    resDirOrders.emplace_back("iphonehd5" );
+    resDirOrders.emplace_back("iphonehd" );
+    resDirOrders.emplace_back("iphone" );
 
     glview->setFrameSize( 768, 1024 );
     glview->setDesignResolutionSize( 768, 1024, ResolutionPolicy::NO_BORDER );
