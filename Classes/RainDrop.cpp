@@ -3,8 +3,7 @@
 
 USING_NS_CC;
 
-RainDrop::RainDrop(Layer *layer, const std::string& filename)
-{
+RainDrop::RainDrop(Layer *layer, const std::string& filename) {
     visibleSize = Director::getInstance()->getVisibleSize();
     origin = Director::getInstance()->getVisibleOrigin();
    
@@ -26,26 +25,20 @@ RainDrop::RainDrop(Layer *layer, const std::string& filename)
     layer->addChild(rainDropSprite);
 }
 
-void RainDrop::moveDown(float dt)
-{
-    if((rainDropSprite->getPositionY() + (rainDropSprite->getBoundingBox().size.height / 2)) > origin.y)
-    {
+void RainDrop::moveDown(float dt) {
+    if((rainDropSprite->getPositionY() + (rainDropSprite->getBoundingBox().size.height / 2)) > origin.y) {
         fall(dt);
-    }
-    else
-    {
+    } else {
         resetRainDrop();
     }
 }
 
-void RainDrop::fall(float dt)
-{
+void RainDrop::fall(float dt) {
     rainDropSprite->setPositionY(rainDropSprite->getPositionY() - 
             (RAIN_SPEED * speedCoef * visibleSize.height * dt));
 }
 
-void RainDrop::resetRainDrop()
-{
+void RainDrop::resetRainDrop() {
     auto randomScale = random(MIN_RAIN_DROP_SCALE, MAX_RAIN_DROP_SCALE);
     rainDropSprite->setScale(randomScale);
     
@@ -59,6 +52,5 @@ void RainDrop::resetRainDrop()
 //                random<int>(
 //                    visibleSize.height + origin.y + (rainDropSprite->getBoundingBox().size.height / 2),
 //                    3 * visibleSize.height + origin.y)
-                visibleSize.height + origin.y + (rainDropSprite->getBoundingBox().size.height / 2)
-                ));
+                visibleSize.height + origin.y + (rainDropSprite->getBoundingBox().size.height / 2)));
 }

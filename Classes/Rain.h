@@ -4,8 +4,7 @@
 #include "cocos2d.h"
 #include "RainDrop.h"
 
-class Rain
-{
+class Rain {
 public:
     explicit Rain(cocos2d::Layer *layer);
     void moveDown(float dt);

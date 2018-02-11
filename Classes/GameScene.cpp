@@ -3,8 +3,7 @@
 
 USING_NS_CC;
 
-Scene* GameScene::createScene()
-{
+Scene* GameScene::createScene() {
     auto scene = Scene::create();
     auto layer = GameScene::create();
 
@@ -14,12 +13,10 @@ Scene* GameScene::createScene()
 }
 
 // on "init" you need to initialize your instance
-bool GameScene::init()
-{
+bool GameScene::init() {
     //////////////////////////////
     // 1. super init first
-    if ( !Layer::init() )
-    {
+    if (!Layer::init()) {
         return false;
     }
 
@@ -51,20 +48,18 @@ bool GameScene::init()
     return true;
 }
 
-void GameScene::update(float dt)
-{
+void GameScene::update(float dt) {
     //CCLOG("%f", dt);
     rain->moveDown(dt);
     line->moveDown(dt);
 }
 
-bool GameScene::onTouchBegan(Touch *touch, Event *event)
-{
+bool GameScene::onTouchBegan(Touch *touch, Event *event) {
     Vec2 touchLocation = this->convertTouchToNodeSpace(touch);
     if(touchLocation.x < visibleSize.width / 2 + origin.x) { //check left or right side of the screen
-        flippingSquares.at(FlippingSquare::ScreenSide::LEFT).flip();
+        flippingSquares.at(FlippingSquare::ScreenSide::LEFT).switchSide();
     }else{
-        flippingSquares.at(FlippingSquare::ScreenSide::RIGHT).flip();
+        flippingSquares.at(FlippingSquare::ScreenSide::RIGHT).switchSide();
     }
     return true;
 }

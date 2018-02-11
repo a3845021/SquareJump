@@ -3,8 +3,7 @@
 
 #include "cocos2d.h"
 
-class RainDrop
-{
+class RainDrop {
 public:
     RainDrop(cocos2d::Layer *layer, const std::string& filename);
 

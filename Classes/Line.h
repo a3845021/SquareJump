@@ -3,8 +3,7 @@
 
 #include "cocos2d.h"
 
-class Line 
-{
+class Line {
 public:
     Line(cocos2d::Layer *layer);
     void moveDown(float dt);

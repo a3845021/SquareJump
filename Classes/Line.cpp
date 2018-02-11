@@ -3,8 +3,7 @@
 
 USING_NS_CC;
 
-Line::Line(Layer *layer)
-{
+Line::Line(Layer *layer) {
     visibleSize = Director::getInstance()->getVisibleSize();
     origin = Director::getInstance()->getVisibleOrigin();
 
@@ -26,15 +25,11 @@ Line::Line(Layer *layer)
     layer->addChild(shiningSprite);
 }
     
-void Line::moveDown(float dt)
-{
-    if((shiningSprite->getPositionY() + (shiningSprite->getContentSize().height / 2)) > origin.y)
-    {
+void Line::moveDown(float dt) {
+    if((shiningSprite->getPositionY() + (shiningSprite->getContentSize().height / 2)) > origin.y) {
         shiningSprite->setPositionY(shiningSprite->getPositionY() - 
                 (GAME_SPEED * visibleSize.height * dt));
-    }
-    else
-    {
+    }else {
         shiningSprite->setPositionY(visibleSize.height + origin.y + 
                 (shiningSprite->getContentSize().height / 2));
     }
