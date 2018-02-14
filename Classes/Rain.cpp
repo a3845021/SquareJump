@@ -9,7 +9,7 @@ Rain::Rain(Layer *layer) {
 }
 
 void Rain::moveDown(float dt) {
-    //CCLOG("%d", rainDrops.capacity());
-    for(auto rainDrop: rainDrops)
+//    CCLOG("%d", rainDrops.capacity());
+    for(auto &rainDrop: rainDrops)
         rainDrop.moveDown(dt);
 }

@@ -10,7 +10,7 @@ public:
     void moveDown(float dt);
 
 private:
-    void fall(float dt);
+    bool isOnScreen();
 
     void resetRainDrop();
 
@@ -19,7 +19,7 @@ private:
 
     cocos2d::Sprite *rainDropSprite;
     
-    float speedCoef;
+    float scale;
 };
 #endif // __RAIN_DROP_H__
 

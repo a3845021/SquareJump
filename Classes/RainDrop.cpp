@@ -1,3 +1,4 @@
+#include <iostream>
 #include "RainDrop.h"
 #include "Definitions.h"
 
@@ -11,11 +12,8 @@ RainDrop::RainDrop(Layer *layer, const std::string& filename) {
 
     rainDropSprite->setOpacity(RAIN_DROP_OPACITY);
 
-    auto randomScale = random(MIN_RAIN_DROP_SCALE, MAX_RAIN_DROP_SCALE);
-    rainDropSprite->setScale(randomScale);
-
-    speedCoef = (randomScale - MIN_RAIN_DROP_SCALE + (MAX_RAIN_DROP_SCALE - randomScale) * RAIN_SCALE_SPEED_COEFFICIENT) /
-                (MAX_RAIN_DROP_SCALE - MIN_RAIN_DROP_SCALE);
+    scale = random(MIN_RAIN_DROP_SCALE, MAX_RAIN_DROP_SCALE);
+    rainDropSprite->setScale(scale);
 
     rainDropSprite->setPosition(Point(
                 random(origin.x + (rainDropSprite->getBoundingBox().size.width / 2),
@@ -26,31 +24,25 @@ RainDrop::RainDrop(Layer *layer, const std::string& filename) {
 }
 
 void RainDrop::moveDown(float dt) {
-    if((rainDropSprite->getPositionY() + (rainDropSprite->getBoundingBox().size.height / 2)) > origin.y) {
-        fall(dt);
+    if(isOnScreen()) {
+        rainDropSprite->setPositionY(rainDropSprite->getPositionY() -
+                                     (RAIN_SPEED * visibleSize.height * dt)/scale);
     } else {
         resetRainDrop();
     }
 }
 
-void RainDrop::fall(float dt) {
-    rainDropSprite->setPositionY(rainDropSprite->getPositionY() - 
-            (RAIN_SPEED * speedCoef * visibleSize.height * dt));
+bool RainDrop::isOnScreen() {
+    return (rainDropSprite->getPositionY() + (rainDropSprite->getBoundingBox().size.height / 2)) > origin.y;
 }
 
 void RainDrop::resetRainDrop() {
-    auto randomScale = random(MIN_RAIN_DROP_SCALE, MAX_RAIN_DROP_SCALE);
-    rainDropSprite->setScale(randomScale);
-    
-    speedCoef = (randomScale - MIN_RAIN_DROP_SCALE + (MAX_RAIN_DROP_SCALE - randomScale) * RAIN_SCALE_SPEED_COEFFICIENT) /
-                (MAX_RAIN_DROP_SCALE - MIN_RAIN_DROP_SCALE);
+    scale = random(MIN_RAIN_DROP_SCALE, MAX_RAIN_DROP_SCALE);
+    rainDropSprite->setScale(scale);
 
     rainDropSprite->setPosition(Point(
-                random<int>(
+                random(
                     origin.x + (rainDropSprite->getBoundingBox().size.width / 2), 
                     visibleSize.width + origin.x - (rainDropSprite->getBoundingBox().size.width / 2)),
-//                random<int>(
-//                    visibleSize.height + origin.y + (rainDropSprite->getBoundingBox().size.height / 2),
-//                    3 * visibleSize.height + origin.y)
                 visibleSize.height + origin.y + (rainDropSprite->getBoundingBox().size.height / 2)));
 }
