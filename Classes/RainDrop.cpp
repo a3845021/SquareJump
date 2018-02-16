@@ -4,7 +4,7 @@
 
 USING_NS_CC;
 
-RainDrop::RainDrop(Layer *layer, const std::string& filename) {
+RainDrop::RainDrop(Layer *layer, const std::string& filename, const float scale) {
     visibleSize = Director::getInstance()->getVisibleSize();
     origin = Director::getInstance()->getVisibleOrigin();
    
@@ -12,7 +12,6 @@ RainDrop::RainDrop(Layer *layer, const std::string& filename) {
 
     rainDropSprite->setOpacity(RAIN_DROP_OPACITY);
 
-    scale = random(MIN_RAIN_DROP_SCALE, MAX_RAIN_DROP_SCALE);
     rainDropSprite->setScale(scale);
 
     rainDropSprite->setPosition(Point(
@@ -25,8 +24,12 @@ RainDrop::RainDrop(Layer *layer, const std::string& filename) {
 
 void RainDrop::moveDown(float dt) {
     if(isOnScreen()) {
+        auto speedCoef = (rainDropSprite->getScale() - MIN_RAIN_DROP_SCALE + (MAX_RAIN_DROP_SCALE - rainDropSprite->getScale()) * RAIN_SPEED_SCALE_DEP) /
+                (MAX_RAIN_DROP_SCALE - MIN_RAIN_DROP_SCALE); //min value is 1/2 and max value is 1, direct proportional to scale
+
         rainDropSprite->setPositionY(rainDropSprite->getPositionY() -
-                                     (RAIN_SPEED * visibleSize.height * dt)/scale);
+                                     (RAIN_SPEED * speedCoef * visibleSize.height * dt));
+
     } else {
         resetRainDrop();
     }
@@ -37,8 +40,7 @@ bool RainDrop::isOnScreen() {
 }
 
 void RainDrop::resetRainDrop() {
-    scale = random(MIN_RAIN_DROP_SCALE, MAX_RAIN_DROP_SCALE);
-    rainDropSprite->setScale(scale);
+//    rainDropSprite->setScale(random(MIN_RAIN_DROP_SCALE, MAX_RAIN_DROP_SCALE));
 
     rainDropSprite->setPosition(Point(
                 random(

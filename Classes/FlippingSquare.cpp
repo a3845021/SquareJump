@@ -49,9 +49,9 @@ void FlippingSquare::switchSide() {
         flippingSquareSprite->stopAllActions();
         flippingSquareSprite->runAction(Sequence::create(
                 Spawn::create(
-                        RotateBy::create(FLIP_ANIMATION_TIME, coefSide * ROTATION_NUMBER * 360),
+                        RotateBy::create(ROTATE_ANIMATION_TIME, coefSide * ROTATION_NUMBER * 360),
                         MoveBy::create(
-                                FLIP_ANIMATION_TIME,
+                                ROTATE_ANIMATION_TIME,
                                 Point(
                                         coefSide * (visibleSize.width / 2 -
                                                 parentNode->getChildByName("line")->getContentSize().width / 2 -

@@ -5,7 +5,7 @@
 
 class RainDrop {
 public:
-    RainDrop(cocos2d::Layer *layer, const std::string& filename);
+    RainDrop(cocos2d::Layer *layer, const std::string& filename, const float scale);
 
     void moveDown(float dt);
 
@@ -18,8 +18,6 @@ private:
     cocos2d::Vec2 origin;
 
     cocos2d::Sprite *rainDropSprite;
-    
-    float scale;
 };
 #endif // __RAIN_DROP_H__
 
