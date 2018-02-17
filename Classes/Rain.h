@@ -10,7 +10,7 @@ public:
     void moveDown(float dt);
 
 private:
-    std::map<float, int> getDiscreteDistributedScaleAmountMap();
+    std::map<std::pair<float, float>, int> getScaleRangeMap();
 
     std::vector<RainDrop> rainDrops;
 };

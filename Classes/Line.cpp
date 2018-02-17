@@ -28,7 +28,7 @@ Line::Line(Layer *layer) {
 void Line::moveDown(float dt) {
     if((shiningSprite->getPositionY() + (shiningSprite->getContentSize().height / 2)) > origin.y) {
         shiningSprite->setPositionY(shiningSprite->getPositionY() - 
-                (GAME_SPEED * visibleSize.height * dt));
+                (SHINING_LINES_SPEED * visibleSize.height * dt));
     }else {
         shiningSprite->setPositionY(visibleSize.height + origin.y + 
                 (shiningSprite->getContentSize().height / 2));

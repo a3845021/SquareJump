@@ -51,7 +51,7 @@ void FlippingSquare::switchSide() {
                 Spawn::create(
                         RotateBy::create(ROTATE_ANIMATION_TIME, coefSide * ROTATION_NUMBER * 360),
                         MoveBy::create(
-                                ROTATE_ANIMATION_TIME,
+                                MOVING_ANIMATION_TIME,
                                 Point(
                                         coefSide * (visibleSize.width / 2 -
                                                 parentNode->getChildByName("line")->getContentSize().width / 2 -

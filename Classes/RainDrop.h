@@ -5,11 +5,13 @@
 
 class RainDrop {
 public:
-    RainDrop(cocos2d::Layer *layer, const std::string& filename, const float scale);
+    RainDrop(cocos2d::Layer *layer, const std::string& filename, std::pair<float, float> scaleRangePair);
 
     void moveDown(float dt);
 
 private:
+    void setRandomScale();
+
     bool isOnScreen();
 
     void resetRainDrop();
@@ -18,6 +20,8 @@ private:
     cocos2d::Vec2 origin;
 
     cocos2d::Sprite *rainDropSprite;
+
+    std::pair<float, float> scaleRangePair;
 };
 #endif // __RAIN_DROP_H__
 
