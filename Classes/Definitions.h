@@ -2,7 +2,11 @@
 #define __DEFINITIONS_H__
 
 //line
+const float DISPLACEMENT_COEF = 0.15f;
 const float SHINING_LINES_SPEED = 0.45f;
+
+//triangle
+const float TRIANGLE_SPEED = 0.45f;
 
 //rain
 const int RAIN_DROP_SCALE_RANGES = 9;

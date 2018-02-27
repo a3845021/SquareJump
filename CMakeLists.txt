@@ -131,9 +131,10 @@ set(GAME_SRC
   Classes/Line.cpp
   Classes/Rain.cpp
   Classes/RainDrop.cpp
-  Classes/FlippingSquare.cpp
+        Classes/Square.cpp
+        Classes/Triangle.cpp
   ${PLATFORM_SPECIFIC_SRC}
-)
+        )
 
 set(GAME_HEADERS
   Classes/AppDelegate.h
@@ -141,10 +142,11 @@ set(GAME_HEADERS
   Classes/Line.h
   Classes/Rain.h
   Classes/RainDrop.h
-  Classes/FlippingSquare.h
+        Classes/Square.h
+        Classes/Triangle.h
   Classes/Definitions.h
   ${PLATFORM_SPECIFIC_HEADERS}
-)
+        )
 
 
 # Configure libcocos2d:

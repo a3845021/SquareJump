@@ -1,17 +1,17 @@
-#ifndef __FLIPPING_SQUARE_H__
-#define __FLIPPING_SQUARE_H__
+#ifndef __SQUARE_H__
+#define __SQUARE_H__
 
 #include "cocos2d.h"
 
-class FlippingSquare {
+class Square {
 public:
     enum class ScreenSide {
         LEFT,
         RIGHT
     };
 
-    FlippingSquare(cocos2d::Layer *layer, const FlippingSquare::ScreenSide &screenSide);
-    
+    Square(cocos2d::Layer *layer, Square::ScreenSide screenSide);
+
     void switchSide();
 
 private:
@@ -21,16 +21,16 @@ private:
         RIGHT
     };
 
-    void setInitPosition(const cocos2d::Node *lineSprite);
+    void setInitPosition(cocos2d::Layer *layer);
 
     cocos2d::Size visibleSize;
     cocos2d::Vec2 origin;
 
     State state;
     ScreenSide screenSide;
-    cocos2d::Sprite *flippingSquareSprite;
+    cocos2d::Sprite *squareSprite;
 
 };
-#endif // __FLIPPING_SQUARE_H__
+#endif // __SQUARE_H__
 
 

@@ -16,7 +16,6 @@ Line::Line(Layer *layer) {
     layer->addChild(lineSprite);
     
     shiningSprite = Sprite::createWithSpriteFrameName("shiningLines.png");
-    const float DISPLACEMENT_COEF = 0.15;
     shiningSprite->setPosition(Point(
                 (visibleSize.width / 2) + origin.x - 
                 (lineSprite->getContentSize().width * DISPLACEMENT_COEF),

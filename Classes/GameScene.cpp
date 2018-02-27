@@ -29,14 +29,20 @@ bool GameScene::init() {
                 visibleSize.height / 2 + origin.y));                        
                                                                             
     this->addChild(backgroundSprite);
-    
-    rain = new Rain(this);
 
-    line = new Line(this);
-    
-    flippingSquares.emplace(FlippingSquare::ScreenSide::LEFT, FlippingSquare(this, FlippingSquare::ScreenSide::LEFT));
-    flippingSquares.emplace(FlippingSquare::ScreenSide::RIGHT, FlippingSquare(this, FlippingSquare::ScreenSide::RIGHT));
-    
+    rain = std::make_unique<Rain>(this);
+
+    line = std::make_unique<Line>(this);
+
+    triangle = std::make_unique<Triangle>(this, Triangle::ScreenSide::LEFT, Triangle::Side::LEFT);
+
+    squaresMap.emplace(std::piecewise_construct,
+                       std::forward_as_tuple(Square::ScreenSide::LEFT),
+                       std::forward_as_tuple(this, Square::ScreenSide::LEFT));
+    squaresMap.emplace(std::piecewise_construct,
+                       std::forward_as_tuple(Square::ScreenSide::RIGHT),
+                       std::forward_as_tuple(this, Square::ScreenSide::RIGHT));
+
     auto touchListener = EventListenerTouchOneByOne::create();
     touchListener->setSwallowTouches(true);
     touchListener->onTouchBegan = CC_CALLBACK_2(GameScene::onTouchBegan, this);
@@ -49,17 +55,17 @@ bool GameScene::init() {
 }
 
 void GameScene::update(float dt) {
-    //CCLOG("%f", dt);
     rain->moveDown(dt);
     line->moveDown(dt);
+    triangle->moveDown(dt);
 }
 
 bool GameScene::onTouchBegan(Touch *touch, Event *event) {
     Vec2 touchLocation = this->convertTouchToNodeSpace(touch);
     if(touchLocation.x < visibleSize.width / 2 + origin.x) { //check left or right side of the screen
-        flippingSquares.at(FlippingSquare::ScreenSide::LEFT).switchSide();
+        squaresMap.at(Square::ScreenSide::LEFT).switchSide();
     }else{
-        flippingSquares.at(FlippingSquare::ScreenSide::RIGHT).switchSide();
+        squaresMap.at(Square::ScreenSide::RIGHT).switchSide();
     }
     return true;
 }

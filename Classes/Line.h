@@ -5,7 +5,7 @@
 
 class Line {
 public:
-    Line(cocos2d::Layer *layer);
+    explicit Line(cocos2d::Layer *layer);
     void moveDown(float dt);
 
 private:
