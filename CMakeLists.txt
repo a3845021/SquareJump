@@ -28,7 +28,7 @@ cmake_minimum_required(VERSION 3.1)
 
 set(APP_NAME MyGame)
 project (${APP_NAME})
-
+set(CMAKE_CXX_STANDARD 17)
 set(COCOS2D_ROOT ${CMAKE_SOURCE_DIR}/cocos2d)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${COCOS2D_ROOT}/cmake/Modules/")
@@ -126,26 +126,28 @@ if ( WIN32 )
 endif( WIN32 )
 
 set(GAME_SRC
-  Classes/AppDelegate.cpp
-  Classes/GameScene.cpp
-  Classes/Line.cpp
-  Classes/Rain.cpp
-  Classes/RainDrop.cpp
+        Classes/AppDelegate.cpp
+        Classes/GameScene.cpp
+        Classes/Line.cpp
+        Classes/Rain.cpp
+        Classes/RainDrop.cpp
         Classes/Square.cpp
         Classes/Triangle.cpp
-  ${PLATFORM_SPECIFIC_SRC}
+        Classes/TriangleManager.cpp
+        ${PLATFORM_SPECIFIC_SRC}
         )
 
 set(GAME_HEADERS
-  Classes/AppDelegate.h
-  Classes/GameScene.h
-  Classes/Line.h
-  Classes/Rain.h
-  Classes/RainDrop.h
+        Classes/AppDelegate.h
+        Classes/GameScene.h
+        Classes/Line.h
+        Classes/Rain.h
+        Classes/RainDrop.h
         Classes/Square.h
         Classes/Triangle.h
-  Classes/Definitions.h
-  ${PLATFORM_SPECIFIC_HEADERS}
+        Classes/TriangleManager.h
+        Classes/Definitions.h
+        ${PLATFORM_SPECIFIC_HEADERS}
         )
 
 

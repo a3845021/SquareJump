@@ -6,6 +6,7 @@
 #include "Line.h"
 #include "Square.h"
 #include "Triangle.h"
+#include "TriangleManager.h"
 
 class GameScene : public cocos2d::Layer {
 public:
@@ -24,7 +25,9 @@ private:
 
     std::unique_ptr<Rain> rain;
     std::unique_ptr<Line> line;
-    std::unique_ptr<Triangle> triangle;
+//    std::unique_ptr<Triangle> triangle;
+    std::deque<Triangle> triangles;
+    std::unique_ptr<TriangleManager> triangleManager;
     std::map<Square::ScreenSide, Square> squaresMap;
 };
 
