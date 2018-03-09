@@ -6,7 +6,11 @@ const float DISPLACEMENT_COEF = 0.15f;
 const float SHINING_LINES_SPEED = 0.45f;
 
 //triangle
-const float TRIANGLE_SPEED = 0.05f;
+const float TRIANGLE_SPEED = 0.45f;
+const int MIN_TRIANGLES_TILL_NEXT_SAME_SIDE = 0;
+const int MAX_TRIANGLES_TILL_NEXT_SAME_SIDE = 9;
+const int MIN_TRIANGLES_TILL_NEXT_DIFF_SIDE = 1;
+const int MAX_TRIANGLES_TILL_NEXT_DIFF_SIDE = 10;
 
 //rain
 const int RAIN_DROP_SCALE_RANGES = 9;

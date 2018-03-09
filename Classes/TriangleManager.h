@@ -8,8 +8,7 @@ public:
     TriangleManager(cocos2d::Layer *layer);
 
     void createAndMoveTriangles(float dt);
-    bool shouldCreateTriangle(const Triangle::ScreenSide &screenSide);
-    void createTriangle(const Triangle::ScreenSide &screenSide);
+    bool shouldCreateTriangle(const Triangle::ScreenSide &screenSide) const;
 
 private:
     void updateNextTriangleSideDistanceMap(const Triangle::ScreenSide &screenSide);
