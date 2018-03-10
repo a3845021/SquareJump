@@ -22,7 +22,7 @@ public:
     bool inUse () const { return used;};
     cocos2d::Sprite *getSprite() const;
 
-    virtual ~Triangle() { CCLOG("Triangle Destroyed %d", id); };
+    virtual ~Triangle() { /*CCLOG("Triangle Destroyed %d", id); */};
 
 private:
     void setInitPosition(const cocos2d::Layer *layer);

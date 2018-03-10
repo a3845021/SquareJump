@@ -12,11 +12,16 @@ Square::Square(cocos2d::Layer *layer, Square::ScreenSide screenSide):
     std::string str = "flippingSquare/flippingSquare";
 
     squareSprite = Sprite::createWithSpriteFrameName(str + "1.png");
-
     setInitPosition(layer);
 
+    auto squareBody = PhysicsBody::createBox(squareSprite->getContentSize());
+    squareBody->setCollisionBitmask(SQUARE_COLLISION_BITMASK);
+    squareBody->setContactTestBitmask(true);
+    squareBody->setDynamic(false);
+
+    squareSprite->setPhysicsBody(squareBody);
+
     layer->addChild(squareSprite);
-    
 }
 
 void Square::setInitPosition(cocos2d::Layer *layer) {

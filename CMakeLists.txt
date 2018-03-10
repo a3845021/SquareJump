@@ -134,6 +134,7 @@ set(GAME_SRC
         Classes/Square.cpp
         Classes/Triangle.cpp
         Classes/TriangleManager.cpp
+        Classes/MyBodyParser.cpp
         ${PLATFORM_SPECIFIC_SRC}
         )
 
@@ -146,6 +147,7 @@ set(GAME_HEADERS
         Classes/Square.h
         Classes/Triangle.h
         Classes/TriangleManager.h
+        Classes/MyBodyParser.h
         Classes/Definitions.h
         ${PLATFORM_SPECIFIC_HEADERS}
         )

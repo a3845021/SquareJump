@@ -5,8 +5,11 @@
 USING_NS_CC;
 
 Scene* GameScene::createScene() {
-    auto scene = Scene::create();
+    auto scene = Scene::createWithPhysics();
+    scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+
     auto layer = GameScene::create();
+    layer->setPhysicsWorld(scene->getPhysicsWorld());
 
     scene->addChild(layer);
 
@@ -50,6 +53,11 @@ bool GameScene::init() {
     Director::getInstance()->getEventDispatcher()->
         addEventListenerWithSceneGraphPriority(touchListener, this);
 
+    auto contactListener = EventListenerPhysicsContact::create();
+    contactListener->onContactBegin = CC_CALLBACK_1(GameScene::onContactBegin, this);
+    Director::getInstance()->getEventDispatcher()->
+        addEventListenerWithSceneGraphPriority(contactListener, this);
+
     this->scheduleUpdate();
 
     return true;
@@ -69,5 +77,17 @@ bool GameScene::onTouchBegan(Touch *touch, Event *event) {
     }else{
         squaresMap.at(Square::ScreenSide::RIGHT).switchSide();
     }
+    return true;
+}
+
+bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact) {
+    PhysicsBody *a = contact.getShapeA()->getBody();
+    PhysicsBody *b = contact.getShapeB()->getBody();
+
+    if((a->getCollisionBitmask() == TRIANGLE_COLLISION_BITMASK && b->getCollisionBitmask() == SQUARE_COLLISION_BITMASK) ||
+            (a->getCollisionBitmask() == SQUARE_COLLISION_BITMASK && b->getCollisionBitmask() == TRIANGLE_COLLISION_BITMASK)) {
+        CCLOG("Contact");
+    }
+
     return true;
 }

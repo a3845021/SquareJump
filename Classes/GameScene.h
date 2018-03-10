@@ -18,15 +18,16 @@ public:
     CREATE_FUNC(GameScene);
 
 private:
-    void update(float dt);
-    bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event);
+    void setPhysicsWorld(cocos2d::PhysicsWorld *world) { sceneWorld = world;};
+    void update(float dt) override;
+    bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event) override;
+    bool onContactBegin(cocos2d::PhysicsContact &contact);
     const cocos2d::Size visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
     const cocos2d::Vec2 origin = cocos2d::Director::getInstance()->getVisibleOrigin();
+    cocos2d::PhysicsWorld *sceneWorld;
 
     std::unique_ptr<Rain> rain;
     std::unique_ptr<Line> line;
-//    std::unique_ptr<Triangle> triangle;
-    std::deque<Triangle> triangles;
     std::unique_ptr<TriangleManager> triangleManager;
     std::map<Square::ScreenSide, Square> squaresMap;
 };
