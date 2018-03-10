@@ -22,22 +22,6 @@ public:
     bool inUse () const { return used;};
     cocos2d::Sprite *getSprite() const;
 
-//    Triangle(const Triangle& triangle){
-//        CCLOG("Copy Constructor %d, %d", triangle.id, this->id);
-//    }
-//
-//    Triangle(Triangle && triangle){
-//        CCLOG("Move Constructor %d, %d", triangle.id, this->id);
-//    }
-//
-//    Triangle& operator=(const Triangle& triangle){
-//        CCLOG("Copy Assignment %d, %d", triangle.id, this->id);
-//    }
-//
-//    Triangle& operator=(Triangle && triangle){
-//        CCLOG("Move Assignment %d, %d", triangle.id, this->id);
-//    }
-
     virtual ~Triangle() { CCLOG("Triangle Destroyed %d", id); };
 
 private:

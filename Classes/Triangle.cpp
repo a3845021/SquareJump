@@ -51,7 +51,6 @@ void Triangle::setInitPosition(const cocos2d::Layer *layer) {
 }
 
 void Triangle::moveDown(float dt) {
-//    distanceTillNextTriangle -= TRIANGLE_SPEED * visibleSize.height * dt;
 
     if((triangleSprite->getPositionY() + (triangleSprite->getContentSize().height / 2)) > origin.y) {
         triangleSprite->setPositionY(triangleSprite->getPositionY() -
@@ -59,8 +58,6 @@ void Triangle::moveDown(float dt) {
     }else {
         triangleSprite->removeFromParent();
         used = false;
-//        triangleSprite->setPositionY(visibleSize.height + origin.y +
-//                                    (triangleSprite->getContentSize().height / 2));
     }
 }
 
