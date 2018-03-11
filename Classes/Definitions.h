@@ -27,8 +27,8 @@ const GLubyte RAIN_DROP_OPACITY = 140; //(0 -> 255) unsigned char
 
 //square
 const int ROTATION_NUMBER = 1;
-const float MOVING_ANIMATION_TIME = 0.4f;
-const float ROTATE_ANIMATION_TIME = 0.4f; // seconds
+const float MOVING_ANIMATION_TIME = 5.0f;
+const float ROTATE_ANIMATION_TIME = 5.0f; // seconds
 const int SQUARE_COLLISION_BITMASK = 0x00000002;
 
 #endif// __DEFINITIONS_H__

@@ -22,6 +22,7 @@ private:
     };
 
     void setInitPosition(cocos2d::Layer *layer);
+    void addRotationTrace();
 
     cocos2d::Size visibleSize;
     cocos2d::Vec2 origin;
