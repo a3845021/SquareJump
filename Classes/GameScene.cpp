@@ -25,9 +25,9 @@ bool GameScene::init() {
     }
 
     auto spriteCache = SpriteFrameCache::getInstance();
-    spriteCache->addSpriteFramesWithFile("gameSpriteSheet.plist");
+    spriteCache->addSpriteFramesWithFile("gameSceneSpriteSheet.plist");
 
-    auto backgroundSprite = Sprite::createWithSpriteFrameName("background.png");               
+    auto backgroundSprite = Sprite::createWithSpriteFrameName("backgroundGameScene.png");
     backgroundSprite->setPosition(Point(                                    
                 visibleSize.width / 2 + origin.x,                           
                 visibleSize.height / 2 + origin.y));                        
@@ -36,7 +36,14 @@ bool GameScene::init() {
 
     rain = std::make_unique<Rain>(this);
 
-    line = std::make_unique<Line>(this);
+    lines.emplace_back(this, "lineCenter");
+    lines.back().setPositionX(visibleSize.width / 2 + origin.x);
+
+    lines.emplace_back(this, "lineLeft");
+    lines.back().setPositionX(origin.x + lines.back().getLineSprite()->getContentSize().width / 2);
+
+    lines.emplace_back(this, "lineRight");
+    lines.back().setPositionX(origin.x + visibleSize.width - lines.back().getLineSprite()->getContentSize().width / 2);
 
     triangleManager = std::make_unique<TriangleManager>(this);
 
@@ -65,7 +72,9 @@ bool GameScene::init() {
 
 void GameScene::update(float dt) {
     rain->moveDown(dt);
-    line->moveDown(dt);
+    for(auto &line: lines) {
+        line.moveDown(dt);
+    }
     triangleManager->createAndMoveTriangles(dt);
 }
 
@@ -73,9 +82,11 @@ void GameScene::update(float dt) {
 bool GameScene::onTouchBegan(Touch *touch, Event *event) {
     Vec2 touchLocation = this->convertTouchToNodeSpace(touch);
     if(touchLocation.x < visibleSize.width / 2 + origin.x) { //check left or right side of the screen
-        squaresMap.at(Square::ScreenSide::LEFT).switchSide();
+        if(squaresMap.at(Square::ScreenSide::LEFT).canSwitchSide())
+            squaresMap.at(Square::ScreenSide::LEFT).switchSide();
     }else{
-        squaresMap.at(Square::ScreenSide::RIGHT).switchSide();
+        if(squaresMap.at(Square::ScreenSide::RIGHT).canSwitchSide())
+            squaresMap.at(Square::ScreenSide::RIGHT).switchSide();
     }
     return true;
 }

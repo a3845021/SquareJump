@@ -12,7 +12,7 @@ class GameScene : public cocos2d::Layer {
 public:
     static cocos2d::Scene* createScene();
 
-    virtual bool init();
+    bool init() override;
     
     // implement the "static create()" method manually
     CREATE_FUNC(GameScene);
@@ -24,10 +24,10 @@ private:
     bool onContactBegin(cocos2d::PhysicsContact &contact);
     const cocos2d::Size visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
     const cocos2d::Vec2 origin = cocos2d::Director::getInstance()->getVisibleOrigin();
-    cocos2d::PhysicsWorld *sceneWorld;
+    cocos2d::PhysicsWorld *sceneWorld = nullptr;
 
     std::unique_ptr<Rain> rain;
-    std::unique_ptr<Line> line;
+    std::vector<Line> lines;
     std::unique_ptr<TriangleManager> triangleManager;
     std::map<Square::ScreenSide, Square> squaresMap;
 };

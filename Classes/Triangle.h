@@ -20,7 +20,7 @@ public:
 
     void moveDown(float dt);
     bool inUse () const { return used;};
-    cocos2d::Sprite *getSprite() const;
+    cocos2d::Sprite *getTriangleSprite() const;
 
     virtual ~Triangle() { /*CCLOG("Triangle Destroyed %d", id); */};
 

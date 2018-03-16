@@ -9,7 +9,7 @@ Rain::Rain(Layer *layer) {
 
     for(auto elem: rainDropScaleRangeMap) {
         for(int i = 0; i < elem.second; ++i) {
-            rainDrops.emplace_back(RainDrop(layer, "rainDrop.png", elem.first));
+            rainDrops.emplace_back(RainDrop(layer, "rain1.png", elem.first));
         }
     }
 }

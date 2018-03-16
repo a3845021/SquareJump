@@ -18,6 +18,8 @@ using namespace CocosDenshion;
 
 USING_NS_CC;
 
+static cocos2d::Size designResolutionSize = cocos2d::Size(768, 1136);
+
 AppDelegate::AppDelegate() {
 }
 
@@ -48,84 +50,23 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // initialize director
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
-if(!glview) {
-        glview = GLViewImpl::create("FlipIt");
+    if(!glview) {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+        glview = GLViewImpl::createWithRect("SquareJump", cocos2d::Rect(0, 0, designResolutionSize.width, designResolutionSize.height));
+#else
+        glview = GLViewImpl::create("SquareJump");
+#endif
         director->setOpenGLView(glview);
     }
-    
+
     // turn on display FPS
     director->setDisplayStats(true);
-    
+
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0f / 60);
-    
-    auto fileUtils = FileUtils::getInstance( );
-    std::vector<std::string> resDirOrders;
-    
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    auto screenSize = glview->getFrameSize( );
-    // check which assets the devices requires
-    if ( 2048 == screenSize.width || 2048 == screenSize.height ) // retina iPad
-    {
-        resDirOrders.push_back( "ipadhd" );
-        resDirOrders.push_back( "ipad" );
-        resDirOrders.push_back( "iphonehd5" );
-        resDirOrders.push_back( "iphonehd" );
-        resDirOrders.push_back( "iphone" );
-        
-        glview->setDesignResolutionSize( 1536, 2048, ResolutionPolicy::NO_BORDER );
-    }
-    else if ( 1024 == screenSize.width || 1024 == screenSize.height ) // non retina iPad
-    {
-        resDirOrders.push_back( "ipad" );
-        resDirOrders.push_back( "iphonehd5" );
-        resDirOrders.push_back( "iphonehd" );
-        resDirOrders.push_back( "iphone" );
-        
-        glview->setDesignResolutionSize( 768, 1024, ResolutionPolicy::NO_BORDER );
-    }
-    else if ( 1136 == screenSize.width || 1136 == screenSize.height ) // retina iPhone (5 and 5S)
-    {
-        resDirOrders.push_back("iphonehd5");
-        resDirOrders.push_back("iphonehd");
-        resDirOrders.push_back("iphone");
-        
-        glview->setDesignResolutionSize( 640, 1136, ResolutionPolicy::NO_BORDER );
-    }
-    else if ( 960 == screenSize.width || 960 == screenSize.height ) // retina iPhone (4 and 4S)
-    {
-        resDirOrders.push_back( "iphonehd" );
-        resDirOrders.push_back( "iphone" );
-        
-        glview->setDesignResolutionSize( 640, 960, ResolutionPolicy::NO_BORDER );
-    }
-    else // non retina iPhone and Android devices
-    {
-        if ( 1080 <= screenSize.width && 1080 <= screenSize.height ) // android devices that have a high resolution
-        {
-            resDirOrders.push_back( "iphonehd" );
-            resDirOrders.push_back( "iphone" );
-             
-            glview->setDesignResolutionSize( 640, 960, ResolutionPolicy::NO_BORDER );
-        }
-        else // non retina iPhone and Android devices with lower resolutions
-        {
-            resDirOrders.push_back( "iphone" );
 
-            glview->setDesignResolutionSize( 320, 480, ResolutionPolicy::NO_BORDER );
-        }
-    }
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-    resDirOrders.emplace_back("ipad" );
-    resDirOrders.emplace_back("iphonehd5" );
-    resDirOrders.emplace_back("iphonehd" );
-    resDirOrders.emplace_back("iphone" );
-
-    glview->setFrameSize( 768, 1024 );
-    glview->setDesignResolutionSize( 768, 1024, ResolutionPolicy::NO_BORDER );
-#endif
-
-    fileUtils->setSearchPaths(resDirOrders);
+    // Set the design resolution
+    glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::NO_BORDER);
 
     register_all_packages();
 

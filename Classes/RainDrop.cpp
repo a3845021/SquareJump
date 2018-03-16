@@ -1,10 +1,12 @@
 #include <iostream>
+#include <utility>
 #include "RainDrop.h"
 #include "Definitions.h"
 
 USING_NS_CC;
 
-RainDrop::RainDrop(Layer *layer, const std::string& filename, std::pair<float, float> scaleRangePair): scaleRangePair(scaleRangePair) {
+RainDrop::RainDrop(Layer *layer, const std::string &filename, std::pair<float, float> scaleRangePair): scaleRangePair(
+        std::move(scaleRangePair)) {
     visibleSize = Director::getInstance()->getVisibleSize();
     origin = Director::getInstance()->getVisibleOrigin();
    

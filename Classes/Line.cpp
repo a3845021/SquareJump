@@ -3,33 +3,51 @@
 
 USING_NS_CC;
 
-Line::Line(Layer *layer) {
+Line::Line(Layer *layer, const std::string &fileName) {
     visibleSize = Director::getInstance()->getVisibleSize();
     origin = Director::getInstance()->getVisibleOrigin();
 
-    auto lineSprite = Sprite::createWithSpriteFrameName("line.png");
-    lineSprite->setName("line");
-    lineSprite->setPosition(Point(
-                visibleSize.width / 2 + origin.x,
-                visibleSize.height / 2 + origin.y));
+    lineSprite = Sprite::createWithSpriteFrameName(fileName +".png");
+    lineSprite->setName(fileName);
+    lineSprite->setPositionY(visibleSize.height / 2 + origin.y);
 
     layer->addChild(lineSprite);
-    
-    shiningSprite = Sprite::createWithSpriteFrameName("shiningLines.png");
-    shiningSprite->setPosition(Point(
-                (visibleSize.width / 2) + origin.x - 
-                (lineSprite->getContentSize().width * DISPLACEMENT_COEF),
-                visibleSize.height / 2 + origin.y));
 
-    layer->addChild(shiningSprite);
+    auto lineSpriteNoise = Sprite::createWithSpriteFrameName(fileName + "Noise.png");
+    lineSpriteNoise->setPosition(Point(
+            lineSprite->getContentSize().width / 2,
+            lineSprite->getContentSize().height / 2));
+    lineNoiseSpriteDeque.emplace_back(lineSpriteNoise);
+    lineSprite->addChild(lineSpriteNoise);
+
+    lineSpriteNoise = Sprite::createWithSpriteFrameName(fileName + "Noise.png");
+    lineSpriteNoise->setPosition(Point(
+            lineSprite->getContentSize().width / 2,
+            lineSprite->getContentSize().height / 2 + lineSpriteNoise->getContentSize().height));
+    lineNoiseSpriteDeque.emplace_back(lineSpriteNoise);
+    lineSprite->addChild(lineSpriteNoise);
 }
     
 void Line::moveDown(float dt) {
-    if((shiningSprite->getPositionY() + (shiningSprite->getContentSize().height / 2)) > origin.y) {
-        shiningSprite->setPositionY(shiningSprite->getPositionY() - 
-                (SHINING_LINES_SPEED * visibleSize.height * dt));
-    }else {
-        shiningSprite->setPositionY(visibleSize.height + origin.y + 
-                (shiningSprite->getContentSize().height / 2));
+    for(auto & lineSpriteNoise: lineNoiseSpriteDeque) {
+        lineSpriteNoise->setPositionY(lineSpriteNoise->getPositionY() - GAME_SPEED_COEF * visibleSize.height * dt);
+    }
+
+    //move front lineNoiseSprite to the back of deque and change it's position to be on top of last lineNoiseSprite
+    if(lineNoiseSpriteDeque.front()->getPositionY() + lineNoiseSpriteDeque.front()->getContentSize().height / 2 < origin.y) {
+        auto lineNoiseSprite = lineNoiseSpriteDeque.front();
+        lineNoiseSpriteDeque.pop_front();
+        lineNoiseSpriteDeque.emplace_back(lineNoiseSprite);
+        lineNoiseSprite->setPositionY(lineNoiseSprite->getPositionY() + 2 * lineNoiseSprite->getContentSize().height);
     }
 }
+
+Sprite *Line::getLineSprite() const {
+    return lineSprite;
+}
+
+void Line::setPositionX(const float &value) {
+    lineSprite->setPositionX(value);
+}
+
+

@@ -11,12 +11,12 @@ TriangleManager::TriangleManager(cocos2d::Layer *layer): layer(layer) {
                          std::forward_as_tuple(Triangle::ScreenSide::LEFT), std::forward_as_tuple());
     trianglesMap.emplace(std::piecewise_construct,
                          std::forward_as_tuple(Triangle::ScreenSide::RIGHT), std::forward_as_tuple());
-    float oneSecondDistance = TRIANGLE_SPEED * visibleSize.height;
+    float oneSecondDistance = GAME_SPEED_COEF * visibleSize.height;
     nextTriangleSideDistanceMap.emplace(std::piecewise_construct,
                                        std::forward_as_tuple(Triangle::ScreenSide::LEFT),
                                        std::forward_as_tuple((Triangle::Side)random(0, 1),
                                                              random(MIN_SECOND_TILL_INIT_TRIANGLE * oneSecondDistance,
-                                                                    MAX_SECOND_TILL_INIT_TRIANGLE * oneSecondDistance))); //TRIANGLE_SPEED * visibleSize.height will give 1 sec
+                                                                    MAX_SECOND_TILL_INIT_TRIANGLE * oneSecondDistance))); //GAME_SPEED_COEF * visibleSize.height will give 1 sec
     nextTriangleSideDistanceMap.emplace(std::piecewise_construct,
                                         std::forward_as_tuple(Triangle::ScreenSide::RIGHT),
                                         std::forward_as_tuple((Triangle::Side)random(0, 1),
@@ -43,7 +43,7 @@ void TriangleManager::createAndMoveTriangles(float dt) {
 
     //decrement distance till next Triangle
     for(auto &elem: nextTriangleSideDistanceMap) {
-        elem.second.second -= TRIANGLE_SPEED * visibleSize.height * dt;
+        elem.second.second -= GAME_SPEED_COEF * visibleSize.height * dt;
     }
 
     //add triangle when needed and set side and distance till next
@@ -61,17 +61,21 @@ bool TriangleManager::shouldCreateTriangle(const Triangle::ScreenSide &screenSid
 
 void TriangleManager::updateNextTriangleSideDistanceMap(const Triangle::ScreenSide &screenSide) {
     auto newSide = (Triangle::Side)random(0, 1); //0 or 1, LEFT or RIGHT
-    auto lastTriangleHeight = trianglesMap.at(screenSide).back().getSprite()->getContentSize().height;
+    auto lastTriangleHeight = trianglesMap.at(screenSide).back().getTriangleSprite()->getContentSize().height;
     if(newSide == nextTriangleSideDistanceMap.at(screenSide).first) {//next triangle's side is same as last triangle's side
         float minDistance = MIN_TRIANGLES_TILL_NEXT_SAME_SIDE * lastTriangleHeight;
         float maxDistance = MAX_TRIANGLES_TILL_NEXT_SAME_SIDE * lastTriangleHeight;
         nextTriangleSideDistanceMap.at(screenSide).second = random(minDistance, maxDistance);
     }else { //next triangle's side is different then last triangle's side
-        float minDistance = TRIANGLE_SPEED * visibleSize.height * MOVING_ANIMATION_TIME + //distance representing visual ilusion of vertical movement
-                                                                                          //that happen when square jumps to other side
+        float squareAnimationMovementDistance = GAME_SPEED_COEF * visibleSize.height * SQUARE_ANIMATION_TIME; //distance representing visual ilusion of vertical movement
+                                                                                                                  //that happen when square jumps to other side
+        float minDistance = squareAnimationMovementDistance +
                             MIN_TRIANGLES_TILL_NEXT_DIFF_SIDE * lastTriangleHeight;       //plus specific desired coeficient, to simplify game.
-        float maxDistance = MAX_TRIANGLES_TILL_NEXT_DIFF_SIDE * lastTriangleHeight;
+        float maxDistance = squareAnimationMovementDistance +
+                            MAX_TRIANGLES_TILL_NEXT_DIFF_SIDE * lastTriangleHeight;
+        CCLOG("minDistance = %f, maxDistance = %f", minDistance, maxDistance);
         nextTriangleSideDistanceMap.at(screenSide).second = random(minDistance, maxDistance);
+        CCLOG("randomValue = %f", nextTriangleSideDistanceMap.at(screenSide).second);
     }
     nextTriangleSideDistanceMap.at(screenSide).first = newSide;
 }

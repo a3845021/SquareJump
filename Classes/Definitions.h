@@ -1,12 +1,8 @@
 #ifndef __DEFINITIONS_H__
 #define __DEFINITIONS_H__
 
-//line
-const float DISPLACEMENT_COEF = 0.15f;
-const float SHINING_LINES_SPEED = 0.45f;
-
 //triangle
-const float TRIANGLE_SPEED = 0.05f;
+const float GAME_SPEED_COEF = 0.25f;
 const float MIN_SECOND_TILL_INIT_TRIANGLE = 1.0f;
 const float MAX_SECOND_TILL_INIT_TRIANGLE = 3.0f;
 const int MIN_TRIANGLES_TILL_NEXT_SAME_SIDE = 1;
@@ -27,8 +23,7 @@ const GLubyte RAIN_DROP_OPACITY = 140; //(0 -> 255) unsigned char
 
 //square
 const int ROTATION_NUMBER = 1;
-const float MOVING_ANIMATION_TIME = 5.0f;
-const float ROTATE_ANIMATION_TIME = 5.0f; // seconds
+const float SQUARE_ANIMATION_TIME = 0.5f;
 const int SQUARE_COLLISION_BITMASK = 0x00000002;
 
 #endif// __DEFINITIONS_H__

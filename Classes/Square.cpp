@@ -9,9 +9,7 @@ Square::Square(cocos2d::Layer *layer, Square::ScreenSide screenSide):
     visibleSize = Director::getInstance()->getVisibleSize();
     origin = Director::getInstance()->getVisibleOrigin();
 
-    std::string str = "flippingSquare/flippingSquare";
-
-    squareSprite = Sprite::createWithSpriteFrameName(str + "1.png");
+    squareSprite = Sprite::createWithSpriteFrameName("square.png");
     setInitPosition(layer);
 
     auto squareBody = PhysicsBody::createBox(squareSprite->getContentSize());
@@ -25,61 +23,87 @@ Square::Square(cocos2d::Layer *layer, Square::ScreenSide screenSide):
 }
 
 void Square::setInitPosition(cocos2d::Layer *layer) {
-    const auto lineSprite = layer->getChildByName("line");
+
     if(screenSide == ScreenSide::LEFT) {
+        const auto lineSprite = layer->getChildByName("lineCenter");
         squareSprite->setPosition(Point(
-                lineSprite->getPositionX() - (lineSprite->getContentSize().width / 2) -
-                        (squareSprite->getContentSize().width / 2),
+                lineSprite->getPositionX() - lineSprite->getContentSize().width / 2 -
+                        squareSprite->getContentSize().width / 2,
                 origin.y + visibleSize.height / 2));
     }else if(screenSide == ScreenSide::RIGHT) {
+        const auto lineSprite = layer->getChildByName("lineRight");
         squareSprite->setPosition(Point(
-                origin.x + visibleSize.width - (squareSprite->getContentSize().width / 2),
+                origin.x + visibleSize.width - lineSprite->getContentSize().width - squareSprite->getContentSize().width / 2,
                 origin.y + visibleSize.height / 2));
     }
 }
 
 void Square::switchSide() {
-    if(state!=State::SWITCHING_SIDES) { //if switching do nothing
-        const int coefSide = (state == State::LEFT) ? 1 : -1;
-        const State afterActionState = (state == State::LEFT) ? State::RIGHT : State::LEFT;
+    const auto initState = state;
+    state = State::SWITCHING_SIDES;
+    squareSprite->stopAllActions();
 
-        const auto switchSideCallback = CallFunc::create([=]() {    // = captures object by reference if it exists
-                                                                    // and all automatic variables used in body of lambda by copy
-            state = afterActionState;
-            squareSprite->removeAllChildren();
-        });
+    addRotationTrace(initState);
 
-        const Node *parentNode = squareSprite->getParent();
-        squareSprite->stopAllActions();
+    int coefSide;
+    State afterActionState;
+    Vec2 movementVec;
 
-        addRotationTrace();
-
-        state = State::SWITCHING_SIDES;
-
-
-        squareSprite->runAction(Sequence::create(
-                Spawn::create(
-                        RotateBy::create(ROTATE_ANIMATION_TIME, coefSide * ROTATION_NUMBER * 360),
-                        MoveBy::create(
-                                MOVING_ANIMATION_TIME,
-                                Point(
-                                        coefSide * (visibleSize.width / 2 -
-                                                parentNode->getChildByName("line")->getContentSize().width / 2 -
-                                                squareSprite->getContentSize().width),
-                                        0)),
-                        nullptr),
-                switchSideCallback,
-                nullptr));
+    if(initState == State::LEFT) {
+        coefSide = 1;
+        afterActionState = State::RIGHT;
+    } else { //initState == State::RIGHT
+        coefSide = -1;
+        afterActionState = State::LEFT;
     }
+
+    const auto switchSideCallback = CallFunc::create([=]() {    // = captures object by reference if it exists
+                                                                // and all automatic variables used in body of lambda by copy
+        state = afterActionState;
+        squareSprite->removeAllChildren();
+    });
+
+    movementVec = getMovementVec(coefSide);
+
+    squareSprite->runAction(Sequence::create(
+            Spawn::create(
+                    RotateBy::create(SQUARE_ANIMATION_TIME, coefSide * ROTATION_NUMBER * 360),
+                    MoveBy::create(SQUARE_ANIMATION_TIME, movementVec),
+                    nullptr),
+            switchSideCallback,
+            nullptr));
 }
 
-void Square::addRotationTrace() {
-    std::string str = "triangle.png"; //need to change
+bool Square::canSwitchSide() const {
+    return state != State::SWITCHING_SIDES;
+}
+
+Vec2 Square::getMovementVec(int &coefSide) {
+    Vec2 movementVec;
+    Node *lineSprite1, *lineSprite2;
+
+    const auto parentNode = squareSprite->getParent();
+    if(screenSide == ScreenSide::LEFT) {
+        lineSprite1 = parentNode->getChildByName("lineCenter");
+        lineSprite2 = parentNode->getChildByName("lineLeft");
+    }else { //screenSide == ScreenSide::RIGHT
+        lineSprite1 = parentNode->getChildByName("lineRight");
+        lineSprite2 = parentNode->getChildByName("lineCenter");
+    }
+
+    movementVec.x = coefSide * (lineSprite1->getPositionX() - lineSprite1->getContentSize().width / 2 -
+                               lineSprite2->getPositionX() - lineSprite2->getContentSize().width / 2 -
+                               squareSprite->getContentSize().width);
+    return movementVec;
+}
+
+void Square::addRotationTrace(const State &initState) {
+    std::string str = "rotationTrace.png"; //need to change
     auto rotationTraceLeft = Sprite::createWithSpriteFrameName(str);
     auto rotationTraceUp = Sprite::createWithSpriteFrameName(str);
     auto rotationTraceRight = Sprite::createWithSpriteFrameName(str);
     auto rotationTraceDown = Sprite::createWithSpriteFrameName(str);
-    if(state == State::LEFT) {
+    if(initState != State::LEFT) {
         rotationTraceLeft->setFlippedY(true);
         rotationTraceUp->setFlippedY(true);
         rotationTraceRight->setFlippedY(true);

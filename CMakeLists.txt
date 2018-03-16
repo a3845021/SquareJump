@@ -28,7 +28,7 @@ cmake_minimum_required(VERSION 3.1)
 
 set(APP_NAME MyGame)
 project (${APP_NAME})
-set(CMAKE_CXX_STANDARD 17)
+
 set(COCOS2D_ROOT ${CMAKE_SOURCE_DIR}/cocos2d)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${COCOS2D_ROOT}/cmake/Modules/")
@@ -77,7 +77,7 @@ else()
   set(CMAKE_C_FLAGS_DEBUG "-g -Wall")
   set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wno-deprecated-declarations -Wno-reorder")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -Wno-deprecated-declarations -Wno-reorder")
   if(CLANG)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
   endif()

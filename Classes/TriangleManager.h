@@ -5,7 +5,7 @@
 
 class TriangleManager {
 public:
-    TriangleManager(cocos2d::Layer *layer);
+    explicit TriangleManager(cocos2d::Layer *layer);
 
     void createAndMoveTriangles(float dt);
     bool shouldCreateTriangle(const Triangle::ScreenSide &screenSide) const;

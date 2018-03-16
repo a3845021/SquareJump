@@ -13,6 +13,7 @@ public:
     Square(cocos2d::Layer *layer, Square::ScreenSide screenSide);
 
     void switchSide();
+    bool canSwitchSide() const;
 
 private:
     enum class State {
@@ -22,7 +23,8 @@ private:
     };
 
     void setInitPosition(cocos2d::Layer *layer);
-    void addRotationTrace();
+    cocos2d::Vec2 getMovementVec(int &coefSide);
+    void addRotationTrace(const State &initState);
 
     cocos2d::Size visibleSize;
     cocos2d::Vec2 origin;
