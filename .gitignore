@@ -1,6 +1,5 @@
-cocos2d
 linux-build
 bin/
 
-.idea
+# Clion related
 cmake-build-debug

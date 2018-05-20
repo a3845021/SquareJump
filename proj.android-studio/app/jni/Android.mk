@@ -11,14 +11,14 @@ LOCAL_MODULE := MyGame_shared
 
 LOCAL_MODULE_FILENAME := libMyGame
 
-HELLOCPP_FILES  := $(wildcard $(LOCAL_PATH)/hellocpp/*.cpp)                 
-HELLOCPP_FILES  := $(HELLOCPP_FILES:$(LOCAL_PATH)/%=%)                      
-                                                                            
-CLASSES_FILES   := $(wildcard $(LOCAL_PATH)/../../../Classes/*.cpp)         
-CLASSES_FILES   := $(CLASSES_FILES:$(LOCAL_PATH)/%=%)                       
-                                                                            
+HELLOCPP_FILES  := $(wildcard $(LOCAL_PATH)/hellocpp/*.cpp)
+HELLOCPP_FILES  := $(HELLOCPP_FILES:$(LOCAL_PATH)/%=%)
+
+CLASSES_FILES   := $(wildcard $(LOCAL_PATH)/../../../Classes/*.cpp)
+CLASSES_FILES   := $(CLASSES_FILES:$(LOCAL_PATH)/%=%)
+
 LOCAL_SRC_FILES := $(HELLOCPP_FILES)                                        
-LOCAL_SRC_FILES += $(CLASSES_FILES) 
+LOCAL_SRC_FILES += $(CLASSES_FILES)
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../Classes
 
