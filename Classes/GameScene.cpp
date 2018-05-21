@@ -30,8 +30,7 @@ bool GameScene::init() {
     auto backgroundSprite = Sprite::createWithSpriteFrameName("backgroundGameScene.png");
     backgroundSprite->setPosition(Point(                                    
                 visibleSize.width / 2 + origin.x,                           
-                visibleSize.height / 2 + origin.y));                        
-                                                                            
+                visibleSize.height / 2 + origin.y));
     this->addChild(backgroundSprite);
 
     rain = std::make_unique<Rain>(this);
@@ -53,6 +52,14 @@ bool GameScene::init() {
     squaresMap.emplace(std::piecewise_construct,
                        std::forward_as_tuple(Square::ScreenSide::RIGHT),
                        std::forward_as_tuple(this, Square::ScreenSide::RIGHT));
+
+    score = 0;
+    scoreLabel = Label::createWithTTF(StringUtils::toString(score), MAIN_FONT, visibleSize.height * SCORE_FONT_SIZE);
+    scoreLabel->setColor(Color3B::WHITE);
+    scoreLabel->setPosition(
+            visibleSize.width * 0.75 + origin.x,
+            visibleSize.height * 0.75 + origin.y);
+    this->addChild(scoreLabel);
 
     auto touchListener = EventListenerTouchOneByOne::create();
     touchListener->setSwallowTouches(true);

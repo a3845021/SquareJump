@@ -25,7 +25,9 @@ private:
     const cocos2d::Size visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
     const cocos2d::Vec2 origin = cocos2d::Director::getInstance()->getVisibleOrigin();
     cocos2d::PhysicsWorld *sceneWorld = nullptr;
+    cocos2d::Label *scoreLabel;
 
+    int score;
     std::unique_ptr<Rain> rain;
     std::vector<Line> lines;
     std::unique_ptr<TriangleManager> triangleManager;
