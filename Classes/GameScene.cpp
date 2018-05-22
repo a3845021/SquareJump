@@ -13,7 +13,7 @@ Scene* GameScene::createScene() {
 
     scene->addChild(layer);
 
-    return scene; 
+    return scene;
 }
 
 // on "init" you need to initialize your instance
@@ -28,8 +28,8 @@ bool GameScene::init() {
     spriteCache->addSpriteFramesWithFile("gameSceneSpriteSheet.plist");
 
     auto backgroundSprite = Sprite::createWithSpriteFrameName("backgroundGameScene.png");
-    backgroundSprite->setPosition(Point(                                    
-                visibleSize.width / 2 + origin.x,                           
+    backgroundSprite->setPosition(Point(
+                visibleSize.width / 2 + origin.x,
                 visibleSize.height / 2 + origin.y));
     this->addChild(backgroundSprite);
 
@@ -46,19 +46,21 @@ bool GameScene::init() {
 
     triangleManager = std::make_unique<TriangleManager>(this);
 
-    squaresMap.emplace(std::piecewise_construct,
-                       std::forward_as_tuple(Square::ScreenSide::LEFT),
-                       std::forward_as_tuple(this, Square::ScreenSide::LEFT));
-    squaresMap.emplace(std::piecewise_construct,
-                       std::forward_as_tuple(Square::ScreenSide::RIGHT),
-                       std::forward_as_tuple(this, Square::ScreenSide::RIGHT));
+    squaresMap.emplace(
+            std::piecewise_construct,
+            std::forward_as_tuple(Square::ScreenSide::LEFT),
+            std::forward_as_tuple(this, Square::ScreenSide::LEFT));
+    squaresMap.emplace(
+            std::piecewise_construct,
+            std::forward_as_tuple(Square::ScreenSide::RIGHT),
+            std::forward_as_tuple(this, Square::ScreenSide::RIGHT));
 
     score = 0;
     scoreLabel = Label::createWithTTF(StringUtils::toString(score), MAIN_FONT, visibleSize.height * SCORE_FONT_SIZE);
     scoreLabel->setColor(Color3B::WHITE);
     scoreLabel->setPosition(
-            visibleSize.width * 0.75 + origin.x,
-            visibleSize.height * 0.75 + origin.y);
+            visibleSize.width * SCORE_POSITION_X_COEF + origin.x,
+            visibleSize.height * SCORE_POSITION_Y_COEF + origin.y);
     this->addChild(scoreLabel);
 
     auto touchListener = EventListenerTouchOneByOne::create();
@@ -105,6 +107,11 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact) {
     if((a->getCollisionBitmask() == TRIANGLE_COLLISION_BITMASK && b->getCollisionBitmask() == SQUARE_COLLISION_BITMASK) ||
             (a->getCollisionBitmask() == SQUARE_COLLISION_BITMASK && b->getCollisionBitmask() == TRIANGLE_COLLISION_BITMASK)) {
         CCLOG("Contact");
+    } else if((a->getCollisionBitmask() == SCORING_LINE_COLLISION_BITMASK && b->getCollisionBitmask() == SQUARE_COLLISION_BITMASK) ||
+            (a->getCollisionBitmask() == SQUARE_COLLISION_BITMASK && b->getCollisionBitmask() == SCORING_LINE_COLLISION_BITMASK)) {
+       //CCLOG("Point Score");
+       ++score;
+       scoreLabel->setString(StringUtils::toString(score));
     }
 
     return true;

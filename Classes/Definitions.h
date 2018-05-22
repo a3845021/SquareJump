@@ -26,6 +26,10 @@ const int ROTATION_NUMBER = 1;
 const float SQUARE_ANIMATION_TIME = 0.5f;
 const int SQUARE_COLLISION_BITMASK = 0x00000002;
 
-const float SCORE_FONT_SIZE = 0.05;
+//score
+const float SCORE_FONT_SIZE = 0.05f;
 const std::string MAIN_FONT = "fonts/Marker Felt.ttf";
+const int SCORING_LINE_COLLISION_BITMASK = 0x00000003;
+const float SCORE_POSITION_X_COEF = 0.75f;
+const float SCORE_POSITION_Y_COEF = 0.75f;
 #endif// __DEFINITIONS_H__

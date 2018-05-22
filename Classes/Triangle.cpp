@@ -7,7 +7,7 @@ USING_NS_CC;
 int Triangle::counter = 0;
 
 Triangle::Triangle(Layer *layer, Triangle::ScreenSide screenSide, Triangle::Side side):
-        screenSide(screenSide), side(side), used(true), triangleSprite(nullptr) {
+        layer(layer), screenSide(screenSide), side(side), used(true), triangleSprite(nullptr) {
 
     id = counter++;
 //    CCLOG("Triangle Created %d", id);
@@ -18,19 +18,39 @@ Triangle::Triangle(Layer *layer, Triangle::ScreenSide screenSide, Triangle::Side
 
     MyBodyParser::getInstance()->parseJsonFile("triangleBody.json");
 
-    //    auto triangleBody = PhysicsBody::createBox(triangleSprite->getContentSize());
-    auto triangleBody = MyBodyParser::getInstance()->bodyFormJson(triangleSprite, "triangleBody", PHYSICSBODY_MATERIAL_DEFAULT);
+    // triangle related
+    const auto triangleBody = MyBodyParser::getInstance()->bodyFormJson(triangleSprite, "triangleBody", PHYSICSBODY_MATERIAL_DEFAULT);
     triangleBody->setCollisionBitmask(TRIANGLE_COLLISION_BITMASK);
     triangleBody->setContactTestBitmask(true);
     triangleBody->setDynamic(false);
     triangleSprite->setPhysicsBody(triangleBody);
 
-    setInitPosition(layer);
+    setInitPositionTriangle();
 
-    layer->addChild(triangleSprite);
+    this->layer->addChild(triangleSprite);
+    ////////////////////////////////
+
+    // scoring line related
+    scoringLineNode = Node::create();
+    const auto lineCenterSprite = this->layer->getChildByName("lineCenter");
+    const auto lineLeftSprite = this->layer->getChildByName("lineLeft");
+    scoringLineSize = Size(lineCenterSprite->getPositionX() -
+            lineCenterSprite->getContentSize().width / 2 - lineLeftSprite->getPositionX() -
+            lineLeftSprite->getContentSize().width / 2,
+            1.0f);
+    const auto scoringLineBody = PhysicsBody::createBox(scoringLineSize);
+    scoringLineBody->setCollisionBitmask(SCORING_LINE_COLLISION_BITMASK);
+    scoringLineBody->setContactTestBitmask(true);
+    scoringLineBody->setDynamic(false);
+    scoringLineNode->setPhysicsBody(scoringLineBody);
+
+    setInitPositionScoringLine();
+
+    this->layer->addChild(scoringLineNode);
+    ////////////////////////////////
 }
 
-void Triangle::setInitPosition(const Layer *layer) {
+void Triangle::setInitPositionTriangle() {
     if(screenSide == ScreenSide::LEFT) {
         if(side == Side::LEFT) {
             const auto lineSprite = layer->getChildByName("lineLeft");
@@ -38,22 +58,22 @@ void Triangle::setInitPosition(const Layer *layer) {
                     origin.x + lineSprite->getContentSize().width + triangleSprite->getContentSize().width / 2,
                     visibleSize.height + origin.y + triangleSprite->getContentSize().height / 2));
             triangleSprite->setScaleX(-1);
-        }else if(side == Side::RIGHT) {
+        } else if(side == Side::RIGHT) {
             const auto lineSprite = layer->getChildByName("lineCenter");
             triangleSprite->setPosition(Point(
                     lineSprite->getPositionX() - lineSprite->getContentSize().width / 2 -
                     triangleSprite->getContentSize().width / 2,
                     visibleSize.height + origin.y + triangleSprite->getContentSize().height / 2));
         }
-    }else if(screenSide == ScreenSide::RIGHT) {
+    } else if(screenSide == ScreenSide::RIGHT) {
         if(side == Side::LEFT) {
             const auto lineSprite = layer->getChildByName("lineCenter");
-            triangleSprite->setScaleX(-1);
             triangleSprite->setPosition(Point(
                     lineSprite->getPositionX() + lineSprite->getContentSize().width / 2 +
                     triangleSprite->getContentSize().width / 2,
                     visibleSize.height + origin.y + triangleSprite->getContentSize().height / 2));
-        }else if(side == Side::RIGHT) {
+            triangleSprite->setScaleX(-1);
+        } else if(side == Side::RIGHT) {
             const auto lineSprite = layer->getChildByName("lineRight");
             triangleSprite->setPosition(Point(
                     origin.x + visibleSize.width - lineSprite->getContentSize().width - triangleSprite->getContentSize().width / 2,
@@ -62,13 +82,29 @@ void Triangle::setInitPosition(const Layer *layer) {
     }
 }
 
+void Triangle::setInitPositionScoringLine() {
+    scoringLineNode->setPositionY(visibleSize.height + origin.y + triangleSprite->getContentSize().height / 2);
+    if(side == Side::LEFT) {
+        scoringLineNode->setPositionX(
+                triangleSprite->getPositionX() - triangleSprite->getContentSize().width / 2 +
+                scoringLineSize.width / 2);
+    } else if(side == Side::RIGHT) {
+        scoringLineNode->setPositionX(
+                triangleSprite->getPositionX() + triangleSprite->getContentSize().width / 2 -
+                scoringLineSize.width / 2);
+    }
+}
+
 void Triangle::moveDown(float dt) {
 
     if((triangleSprite->getPositionY() + (triangleSprite->getContentSize().height / 2)) > origin.y) {
         triangleSprite->setPositionY(triangleSprite->getPositionY() -
                                     (GAME_SPEED_COEF * visibleSize.height * dt));
-    }else {
+        scoringLineNode->setPositionY(scoringLineNode->getPositionY() -
+                                    (GAME_SPEED_COEF * visibleSize.height * dt));
+    } else {
         triangleSprite->removeFromParent();
+        scoringLineNode->removeFromParent();
         used = false;
     }
 }

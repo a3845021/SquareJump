@@ -25,7 +25,8 @@ public:
     virtual ~Triangle() { /*CCLOG("Triangle Destroyed %d", id); */};
 
 private:
-    void setInitPosition(const cocos2d::Layer *layer);
+    void setInitPositionTriangle();
+    void setInitPositionScoringLine();
 
     int id;
 
@@ -37,7 +38,10 @@ private:
 
     bool used;
 
+    cocos2d::Size scoringLineSize;
+    cocos2d::Layer *layer;
     cocos2d::Sprite *triangleSprite;
+    cocos2d::Node *scoringLineNode;
 };
 
 
