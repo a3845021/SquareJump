@@ -10,7 +10,7 @@ public:
         RIGHT
     };
 
-    Square(cocos2d::Layer *layer, Square::ScreenSide screenSide);
+    Square(cocos2d::Scene *scene, Square::ScreenSide screenSide);
 
     void switchSide();
     bool canSwitchSide() const;
@@ -22,7 +22,7 @@ private:
         RIGHT
     };
 
-    void setInitPosition(cocos2d::Layer *layer);
+    void setInitPosition(cocos2d::Scene *scene);
     cocos2d::Vec2 getMovementVec(int &coefSide);
     void addRotationTrace(const State &initState);
 
@@ -35,5 +35,3 @@ private:
 
 };
 #endif // __SQUARE_H__
-
-

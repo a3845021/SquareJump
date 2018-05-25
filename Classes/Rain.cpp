@@ -3,13 +3,13 @@
 
 USING_NS_CC;
 
-Rain::Rain(Layer *layer) {
+Rain::Rain(Scene *scene) {
 
     auto rainDropScaleRangeMap = getScaleRangeMap();
 
     for(auto elem: rainDropScaleRangeMap) {
         for(int i = 0; i < elem.second; ++i) {
-            rainDrops.emplace_back(RainDrop(layer, "rain1.png", elem.first));
+            rainDrops.emplace_back(RainDrop(scene, "rain1.png", elem.first));
         }
     }
 }

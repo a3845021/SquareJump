@@ -5,7 +5,7 @@
 
 class RainDrop {
 public:
-    RainDrop(cocos2d::Layer *layer, const std::string& filename, std::pair<float, float> scaleRangePair);
+    RainDrop(cocos2d::Scene *scene, const std::string& filename, std::pair<float, float> scaleRangePair);
 
     void moveDown(float dt);
 
@@ -24,4 +24,3 @@ private:
     std::pair<float, float> scaleRangePair;
 };
 #endif // __RAIN_DROP_H__
-

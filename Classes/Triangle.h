@@ -16,7 +16,7 @@ public:
         RIGHT
     };
 
-    Triangle(cocos2d::Layer *layer, ScreenSide screenSide, Side side);
+    Triangle(cocos2d::Scene *scene, ScreenSide screenSide, Side side);
 
     void moveDown(float dt);
     bool inUse () const { return used;};
@@ -39,7 +39,7 @@ private:
     bool used;
 
     cocos2d::Size scoringLineSize;
-    cocos2d::Layer *layer;
+    cocos2d::Scene *scene;
     cocos2d::Sprite *triangleSprite;
     cocos2d::Node *scoringLineNode;
 };

@@ -3,14 +3,14 @@
 
 USING_NS_CC;
 
-Square::Square(cocos2d::Layer *layer, Square::ScreenSide screenSide):
+Square::Square(cocos2d::Scene *scene, Square::ScreenSide screenSide):
         screenSide(screenSide), squareSprite(nullptr), state(State::RIGHT) {  // square appear on right side of bar
 
     visibleSize = Director::getInstance()->getVisibleSize();
     origin = Director::getInstance()->getVisibleOrigin();
 
     squareSprite = Sprite::createWithSpriteFrameName("square.png");
-    setInitPosition(layer);
+    setInitPosition(scene);
 
     auto squareBody = PhysicsBody::createBox(squareSprite->getContentSize());
     squareBody->setCollisionBitmask(SQUARE_COLLISION_BITMASK);
@@ -19,19 +19,19 @@ Square::Square(cocos2d::Layer *layer, Square::ScreenSide screenSide):
 
     squareSprite->setPhysicsBody(squareBody);
 
-    layer->addChild(squareSprite);
+    scene->addChild(squareSprite);
 }
 
-void Square::setInitPosition(cocos2d::Layer *layer) {
+void Square::setInitPosition(cocos2d::Scene *scene) {
 
     if(screenSide == ScreenSide::LEFT) {
-        const auto lineSprite = layer->getChildByName("lineCenter");
+        const auto lineSprite = scene->getChildByName("lineCenter");
         squareSprite->setPosition(Point(
                 lineSprite->getPositionX() - lineSprite->getContentSize().width / 2 -
                         squareSprite->getContentSize().width / 2,
                 origin.y + visibleSize.height / 2));
     }else if(screenSide == ScreenSide::RIGHT) {
-        const auto lineSprite = layer->getChildByName("lineRight");
+        const auto lineSprite = scene->getChildByName("lineRight");
         squareSprite->setPosition(Point(
                 origin.x + visibleSize.width - lineSprite->getContentSize().width - squareSprite->getContentSize().width / 2,
                 origin.y + visibleSize.height / 2));

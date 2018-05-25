@@ -6,8 +6,8 @@ USING_NS_CC;
 
 int Triangle::counter = 0;
 
-Triangle::Triangle(Layer *layer, Triangle::ScreenSide screenSide, Triangle::Side side):
-        layer(layer), screenSide(screenSide), side(side), used(true), triangleSprite(nullptr) {
+Triangle::Triangle(Scene *scene, Triangle::ScreenSide screenSide, Triangle::Side side):
+        scene(scene), screenSide(screenSide), side(side), used(true), triangleSprite(nullptr) {
 
     id = counter++;
 //    CCLOG("Triangle Created %d", id);
@@ -27,13 +27,13 @@ Triangle::Triangle(Layer *layer, Triangle::ScreenSide screenSide, Triangle::Side
 
     setInitPositionTriangle();
 
-    this->layer->addChild(triangleSprite);
+    this->scene->addChild(triangleSprite);
     ////////////////////////////////
 
     // scoring line related
     scoringLineNode = Node::create();
-    const auto lineCenterSprite = this->layer->getChildByName("lineCenter");
-    const auto lineLeftSprite = this->layer->getChildByName("lineLeft");
+    const auto lineCenterSprite = this->scene->getChildByName("lineCenter");
+    const auto lineLeftSprite = this->scene->getChildByName("lineLeft");
     scoringLineSize = Size(lineCenterSprite->getPositionX() -
             lineCenterSprite->getContentSize().width / 2 - lineLeftSprite->getPositionX() -
             lineLeftSprite->getContentSize().width / 2,
@@ -46,20 +46,20 @@ Triangle::Triangle(Layer *layer, Triangle::ScreenSide screenSide, Triangle::Side
 
     setInitPositionScoringLine();
 
-    this->layer->addChild(scoringLineNode);
+    this->scene->addChild(scoringLineNode);
     ////////////////////////////////
 }
 
 void Triangle::setInitPositionTriangle() {
     if(screenSide == ScreenSide::LEFT) {
         if(side == Side::LEFT) {
-            const auto lineSprite = layer->getChildByName("lineLeft");
+            const auto lineSprite = scene->getChildByName("lineLeft");
             triangleSprite->setPosition(Point(
                     origin.x + lineSprite->getContentSize().width + triangleSprite->getContentSize().width / 2,
                     visibleSize.height + origin.y + triangleSprite->getContentSize().height / 2));
             triangleSprite->setScaleX(-1);
         } else if(side == Side::RIGHT) {
-            const auto lineSprite = layer->getChildByName("lineCenter");
+            const auto lineSprite = scene->getChildByName("lineCenter");
             triangleSprite->setPosition(Point(
                     lineSprite->getPositionX() - lineSprite->getContentSize().width / 2 -
                     triangleSprite->getContentSize().width / 2,
@@ -67,14 +67,14 @@ void Triangle::setInitPositionTriangle() {
         }
     } else if(screenSide == ScreenSide::RIGHT) {
         if(side == Side::LEFT) {
-            const auto lineSprite = layer->getChildByName("lineCenter");
+            const auto lineSprite = scene->getChildByName("lineCenter");
             triangleSprite->setPosition(Point(
                     lineSprite->getPositionX() + lineSprite->getContentSize().width / 2 +
                     triangleSprite->getContentSize().width / 2,
                     visibleSize.height + origin.y + triangleSprite->getContentSize().height / 2));
             triangleSprite->setScaleX(-1);
         } else if(side == Side::RIGHT) {
-            const auto lineSprite = layer->getChildByName("lineRight");
+            const auto lineSprite = scene->getChildByName("lineRight");
             triangleSprite->setPosition(Point(
                     origin.x + visibleSize.width - lineSprite->getContentSize().width - triangleSprite->getContentSize().width / 2,
                     visibleSize.height + origin.y + triangleSprite->getContentSize().height / 2));
@@ -112,4 +112,3 @@ void Triangle::moveDown(float dt) {
 cocos2d::Sprite *Triangle::getTriangleSprite() const {
     return triangleSprite;
 }
-

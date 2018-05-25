@@ -3,7 +3,7 @@
 
 USING_NS_CC;
 
-TriangleManager::TriangleManager(cocos2d::Layer *layer): layer(layer) {
+TriangleManager::TriangleManager(cocos2d::Scene *scene): scene(scene) {
     visibleSize = Director::getInstance()->getVisibleSize();
     origin = Director::getInstance()->getVisibleOrigin();
 
@@ -51,7 +51,7 @@ void TriangleManager::createAndMoveTriangles(float dt) {
     // add triangle when needed and set side and distance till next
     for(auto &elem: trianglesMap) {
         if(shouldCreateTriangle(elem.first)) {
-            elem.second.emplace_back(layer, elem.first, nextTriangleSideDistanceMap.at(elem.first).first);
+            elem.second.emplace_back(scene, elem.first, nextTriangleSideDistanceMap.at(elem.first).first);
             updateNextTriangleSideDistanceMap(elem.first);
         }
     }

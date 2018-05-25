@@ -5,11 +5,11 @@
 
 USING_NS_CC;
 
-RainDrop::RainDrop(Layer *layer, const std::string &filename, std::pair<float, float> scaleRangePair): scaleRangePair(
+RainDrop::RainDrop(Scene *scene, const std::string &filename, std::pair<float, float> scaleRangePair): scaleRangePair(
         std::move(scaleRangePair)) {
     visibleSize = Director::getInstance()->getVisibleSize();
     origin = Director::getInstance()->getVisibleOrigin();
-   
+
     rainDropSprite = Sprite::createWithSpriteFrameName(filename);
     rainDropSprite->setOpacity(RAIN_DROP_OPACITY);
     setRandomScale();
@@ -18,7 +18,7 @@ RainDrop::RainDrop(Layer *layer, const std::string &filename, std::pair<float, f
                         visibleSize.width + origin.x - (rainDropSprite->getBoundingBox().size.width / 2)),
                 random(origin.y,
                         visibleSize.height + origin.y)));
-    layer->addChild(rainDropSprite);
+    scene->addChild(rainDropSprite);
 }
 
 void RainDrop::moveDown(float dt) {
@@ -46,7 +46,7 @@ void RainDrop::resetRainDrop() {
     setRandomScale();
     rainDropSprite->setPosition(Point(
                 random(
-                    origin.x + (rainDropSprite->getBoundingBox().size.width / 2), 
+                    origin.x + (rainDropSprite->getBoundingBox().size.width / 2),
                     visibleSize.width + origin.x - (rainDropSprite->getBoundingBox().size.width / 2)),
                 visibleSize.height + origin.y + (rainDropSprite->getBoundingBox().size.height / 2)));
 }

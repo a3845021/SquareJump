@@ -6,7 +6,7 @@
 
 class Rain {
 public:
-    explicit Rain(cocos2d::Layer *layer);
+    explicit Rain(cocos2d::Scene *scene);
     void moveDown(float dt);
 
 private:

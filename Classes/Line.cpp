@@ -3,7 +3,7 @@
 
 USING_NS_CC;
 
-Line::Line(Layer *layer, const std::string &fileName) {
+Line::Line(Scene *scene, const std::string &fileName) {
     visibleSize = Director::getInstance()->getVisibleSize();
     origin = Director::getInstance()->getVisibleOrigin();
 
@@ -11,7 +11,7 @@ Line::Line(Layer *layer, const std::string &fileName) {
     lineSprite->setName(fileName);
     lineSprite->setPositionY(visibleSize.height / 2 + origin.y);
 
-    layer->addChild(lineSprite);
+    scene->addChild(lineSprite);
 
     auto lineSpriteNoise = Sprite::createWithSpriteFrameName(fileName + "Noise.png");
     lineSpriteNoise->setPosition(Point(
@@ -27,7 +27,7 @@ Line::Line(Layer *layer, const std::string &fileName) {
     lineNoiseSpriteDeque.emplace_back(lineSpriteNoise);
     lineSprite->addChild(lineSpriteNoise);
 }
-    
+
 void Line::moveDown(float dt) {
     for(auto & lineSpriteNoise: lineNoiseSpriteDeque) {
         lineSpriteNoise->setPositionY(lineSpriteNoise->getPositionY() - GAME_SPEED_COEF * visibleSize.height * dt);
@@ -49,5 +49,3 @@ Sprite *Line::getLineSprite() const {
 void Line::setPositionX(const float &value) {
     lineSprite->setPositionX(value);
 }
-
-

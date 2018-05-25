@@ -5,14 +5,8 @@
 USING_NS_CC;
 
 Scene* GameScene::createScene() {
-    auto scene = Scene::createWithPhysics();
+    auto scene = GameScene::create();
     scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
-
-    auto layer = GameScene::create();
-    layer->setPhysicsWorld(scene->getPhysicsWorld());
-
-    scene->addChild(layer);
-
     return scene;
 }
 
@@ -20,7 +14,7 @@ Scene* GameScene::createScene() {
 bool GameScene::init() {
     //////////////////////////////
     // 1. super init first
-    if (!Layer::init()) {
+    if (!Scene::initWithPhysics()) {
         return false;
     }
 

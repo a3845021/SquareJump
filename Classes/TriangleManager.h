@@ -5,7 +5,7 @@
 
 class TriangleManager {
 public:
-    explicit TriangleManager(cocos2d::Layer *layer);
+    explicit TriangleManager(cocos2d::Scene *scene);
 
     void createAndMoveTriangles(float dt);
     bool shouldCreateTriangle(const Triangle::ScreenSide &screenSide) const;
@@ -19,7 +19,7 @@ private:
     std::map<Triangle::ScreenSide, std::deque<Triangle>> trianglesMap;
     std::map<Triangle::ScreenSide, std::pair<Triangle::Side, float>> nextTriangleSideDistanceMap;
 
-    cocos2d::Layer *layer;
+    cocos2d::Scene *scene;
 };
 
 

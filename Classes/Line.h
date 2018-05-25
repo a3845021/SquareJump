@@ -5,7 +5,7 @@
 
 class Line {
 public:
-    explicit Line(cocos2d::Layer *layer, const std::string &fileName);
+    explicit Line(cocos2d::Scene *scene, const std::string &fileName);
     void moveDown(float dt);
     cocos2d::Sprite *getLineSprite() const;
     void setPositionX(const float &position);
@@ -17,4 +17,4 @@ private:
     cocos2d::Sprite *lineSprite;
     std::deque<cocos2d::Sprite *> lineNoiseSpriteDeque;
 };
-#endif // __LINE_H__ 
+#endif // __LINE_H__
