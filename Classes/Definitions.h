@@ -27,9 +27,12 @@ const float SQUARE_ANIMATION_TIME = 0.5f;
 const int SQUARE_COLLISION_BITMASK = 0x00000002;
 
 //score
-const float SCORE_FONT_SIZE = 0.05f;
-const std::string MAIN_FONT = "fonts/Marker Felt.ttf";
+const float SCORE_FONT_SIZE = 99.35f;
+const std::string MAIN_FONT = "fonts/AldotheApache.ttf";
+const int MAIN_FONT_COLOR_RED = 19;
+const int MAIN_FONT_COLOR_GREEN= 43;
+const int MAIN_FONT_COLOR_BLUE = 91;
 const int SCORING_LINE_COLLISION_BITMASK = 0x00000003;
 const float SCORE_POSITION_X_COEF = 0.75f;
-const float SCORE_POSITION_Y_COEF = 0.75f;
+const float SCORE_POSITION_Y_COEF = 0.85f;
 #endif// __DEFINITIONS_H__

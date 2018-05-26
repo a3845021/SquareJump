@@ -50,8 +50,8 @@ bool GameScene::init() {
             std::forward_as_tuple(this, Square::ScreenSide::RIGHT));
 
     score = 0;
-    scoreLabel = Label::createWithTTF(StringUtils::toString(score), MAIN_FONT, visibleSize.height * SCORE_FONT_SIZE);
-    scoreLabel->setColor(Color3B::WHITE);
+    scoreLabel = Label::createWithTTF(StringUtils::toString(score), MAIN_FONT, SCORE_FONT_SIZE);
+    scoreLabel->setColor(Color3B(MAIN_FONT_COLOR_RED, MAIN_FONT_COLOR_GREEN, MAIN_FONT_COLOR_BLUE));
     scoreLabel->setPosition(
             visibleSize.width * SCORE_POSITION_X_COEF + origin.x,
             visibleSize.height * SCORE_POSITION_Y_COEF + origin.y);
