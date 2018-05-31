@@ -1,3 +1,5 @@
+#include <cmath>
+#include <utility>
 #include "Rain.h"
 #include "Definitions.h"
 
@@ -6,12 +8,27 @@ USING_NS_CC;
 Rain::Rain(Scene *scene) {
 
     auto rainDropScaleRangeMap = getScaleRangeMap();
+    auto rainNode = Node::create();
+
+    auto winSize = Director::getInstance()->getWinSize();
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+
+    rainNode->setPosition(winSize.width/2, winSize.height/2);
+
+    auto visibleSizeDiagonal = std::sqrt(std::pow(visibleSize.height, 2.0f) + std::pow(visibleSize.width, 2.0f));
+
+    rainNode->setContentSize(Size(visibleSizeDiagonal, visibleSizeDiagonal));
+
+    rainNode->setAnchorPoint(Vec2(0.5f, 0.5f));
+    rainNode->setRotation(-RAIN_ANGLE);
 
     for(auto elem: rainDropScaleRangeMap) {
         for(int i = 0; i < elem.second; ++i) {
-            rainDrops.emplace_back(RainDrop(scene, "rain1.png", elem.first));
+            rainDrops.emplace_back(RainDrop(rainNode, "rain2.png", elem.first));
         }
     }
+
+    scene->addChild(rainNode);
 }
 
 void Rain::moveDown(float dt) {

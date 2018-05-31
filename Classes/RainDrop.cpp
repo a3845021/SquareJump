@@ -5,20 +5,22 @@
 
 USING_NS_CC;
 
-RainDrop::RainDrop(Scene *scene, const std::string &filename, std::pair<float, float> scaleRangePair): scaleRangePair(
+RainDrop::RainDrop(Node *rainNode, const std::string &filename, std::pair<float, float> scaleRangePair): scaleRangePair(
         std::move(scaleRangePair)) {
+    
     visibleSize = Director::getInstance()->getVisibleSize();
-    origin = Director::getInstance()->getVisibleOrigin();
 
     rainDropSprite = Sprite::createWithSpriteFrameName(filename);
     rainDropSprite->setOpacity(RAIN_DROP_OPACITY);
     setRandomScale();
-    rainDropSprite->setPosition(Point(
-                random(origin.x + (rainDropSprite->getBoundingBox().size.width / 2),
-                        visibleSize.width + origin.x - (rainDropSprite->getBoundingBox().size.width / 2)),
-                random(origin.y,
-                        visibleSize.height + origin.y)));
-    scene->addChild(rainDropSprite);
+
+    rainContentSize = rainNode->getContentSize();
+    rainDropSprite->setPosition(Vec2(
+                random(
+                    rainDropSprite->getBoundingBox().size.width / 2,
+                    rainContentSize.width - rainDropSprite->getBoundingBox().size.width / 2),
+                random(0.0f, rainContentSize.height)));
+    rainNode->addChild(rainDropSprite);
 }
 
 void RainDrop::moveDown(float dt) {
@@ -39,14 +41,14 @@ void RainDrop::setRandomScale() {
 }
 
 bool RainDrop::isOnScreen() {
-    return (rainDropSprite->getPositionY() + (rainDropSprite->getBoundingBox().size.height / 2)) > origin.y;
+    return (rainDropSprite->getPositionY() + (rainDropSprite->getBoundingBox().size.height / 2)) > 0;
 }
 
 void RainDrop::resetRainDrop() {
     setRandomScale();
-    rainDropSprite->setPosition(Point(
+    rainDropSprite->setPosition(Vec2(
                 random(
-                    origin.x + (rainDropSprite->getBoundingBox().size.width / 2),
-                    visibleSize.width + origin.x - (rainDropSprite->getBoundingBox().size.width / 2)),
-                visibleSize.height + origin.y + (rainDropSprite->getBoundingBox().size.height / 2)));
+                    rainDropSprite->getBoundingBox().size.width / 2,
+                    rainContentSize.width - rainDropSprite->getBoundingBox().size.width / 2),
+                rainContentSize.height + rainDropSprite->getBoundingBox().size.height / 2));
 }
